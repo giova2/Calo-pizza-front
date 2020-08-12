@@ -32,9 +32,23 @@ const Item = ({ id, name, ingredients, price, currency }: ItemType) => {
     : 0;
   const renderRemoveButton = () => {
     if (item && item.quantity > 0) {
-      return <RemoveButton onClick={() => dispatch(removeItem(id))} />;
+      return (
+        <RemoveButton
+          onTouchStart={(e) => {
+            e.stopPropagation();
+          }}
+          onClick={() => dispatch(removeItem(id))}
+        />
+      );
     }
-    return <RemoveButton disabled />;
+    return (
+      <RemoveButton
+        onTouchStart={(e) => {
+          e.stopPropagation();
+        }}
+        disabled
+      />
+    );
   };
   const renderPrice = () => {
     if (actualCurrency === USD) {
@@ -45,6 +59,9 @@ const Item = ({ id, name, ingredients, price, currency }: ItemType) => {
 
   return (
     <ItemContainer
+      onTouchStart={(e) => {
+        setAnimate(!animate);
+      }}
       onMouseEnter={() => {
         setAnimate(true);
       }}
@@ -63,7 +80,12 @@ const Item = ({ id, name, ingredients, price, currency }: ItemType) => {
         {(state: any) => (
           // state change: exited -> entering -> entered -> exiting -> exited
           <ItemInteraction state={state}>
-            <AddButton onClick={() => dispatch(addItem(id))} />
+            <AddButton
+              onTouchStart={(e) => {
+                e.stopPropagation();
+              }}
+              onClick={() => dispatch(addItem(id))}
+            />
             <ItemQuantity>
               {item && item.quantity ? item.quantity : 0}
             </ItemQuantity>

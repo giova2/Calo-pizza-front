@@ -43,7 +43,7 @@ export const ItemBottom = styled(ItemTop)`
 `;
 
 export const ItemInteraction = styled.div<{ state: any }>`
-  background: rgba(0, 0, 0, 0.95);
+  background: rgba(0, 0, 0, 0.85);
   width: 100%;
   height: 100%;
   transition: 0.5s;
