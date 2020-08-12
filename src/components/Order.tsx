@@ -23,7 +23,7 @@ import { myRound } from "../resources";
 
 import OrderForm from "./OrderForm";
 import { ItemTypeOrder, OrderData, OrderItemEnum } from "../types";
-import { USD, EUR } from "../constants";
+import { USD } from "../constants";
 
 type TOrderProps = {
   show: boolean;

@@ -99,16 +99,12 @@ const chooseBackground = (type: OrderItemEnum) => {
   switch (type) {
     case OrderItemEnum.header:
       return "#ffffff";
-      break;
     case OrderItemEnum.fees:
       return "#f6ee0d55";
-      break;
     case OrderItemEnum.total:
       return "#4a934655";
-      break;
     case OrderItemEnum.subtotal:
       return "#cf373755";
-      break;
     default:
       return "#cf373733";
   }

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { USD, EUR } from "../constants";
 
 export const CurrencyContainer = styled.div``;
 

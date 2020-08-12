@@ -6,6 +6,14 @@
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-display: swap;
+  font-family: "Pan pizza";
+  src: local("Pan pizza"), local("panpizza"),
+    url(./assets/fonts/panpizza.woff) format("woff");
+  font-weight: 300;
+  font-style: normal;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
