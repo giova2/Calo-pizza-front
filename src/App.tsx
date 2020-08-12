@@ -1,24 +1,65 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { ThemeProvider } from "styled-components";
+import GlobalStyle from "./styledComponents/GlobalStyle";
+import theme from "./styledComponents/Theme";
+import Header from "./components/Header";
+import Order from "./components/Order";
+import ItemList from "./components/ItemList";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "./reducers";
+import { getCurrencyRate, getItemsAction, notificationAction } from "./actions";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import "./App.css";
 
 function App() {
+  const orderReducer = useSelector((state: RootState) => state.orderReducer);
+  const display: boolean = orderReducer?.display;
+  const notification = orderReducer?.notification;
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    if (notification && notification.type !== null) {
+      notification.type === "error" && toast.error(notification.message);
+      notification.type === "ok" && toast.success(notification.message);
+      notification.type === "warn" && toast.warn(notification.message);
+    }
+    if (!orderReducer?.exchangeRate) {
+      getCurrencyRate(dispatch);
+    }
+    if (orderReducer?.items.length === 0) {
+      getItemsAction(dispatch);
+    }
+
+    return () => {
+      dispatch(notificationAction(null, null));
+    };
+  }, [notification?.message]);
+
+  const renderToast = () => {
+    return (
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        pauseOnHover
+      />
+    );
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        {renderToast()}
+        <Order show={display} />
+        <Header />
+        <ItemList />
+      </ThemeProvider>
     </div>
   );
 }
