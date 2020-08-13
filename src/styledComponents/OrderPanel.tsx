@@ -142,9 +142,20 @@ export const OrderItem = styled.tr<{ type?: OrderItemEnum }>`
   width: 100%;
 `;
 
-export const OrderItemProperty = styled.td<{ type?: OrderItemEnum }>`
+const flexProps = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+`;
+
+export const OrderItemProperty = styled.td<{
+  type?: OrderItemEnum;
+  flex?: any;
+}>`
   border-bottom: ${({ type }) => type && chooseBorderBottom(type)};
   border-top: ${({ type }) => type && chooseBorderTop(type)};
+  ${({ flex }) => (flex ? flexProps : "")};
   ${breakpoint("mobile")`
     padding: 0;
   `}

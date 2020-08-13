@@ -12,10 +12,14 @@ import {
   OrderItem,
   OrderItemProperty,
 } from "../styledComponents/OrderPanel";
+import { AddButtonTable, RemoveButtonTable } from "../styledComponents/Item";
+
 import {
   displayOrderPanel,
   notificationAction,
   makeOrderAction,
+  removeItem,
+  addItem,
 } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../reducers";
@@ -74,6 +78,16 @@ const Order: FunctionComponent<TOrderProps> = ({ show }) => {
     }
     return response;
   };
+  const renderRemoveButton = (item: ItemTypeOrder) => {
+    if (item.quantity > 0) {
+      return (
+        <RemoveButtonTable
+          onClick={() => dispatch(removeItem(item.id, false))}
+        />
+      );
+    }
+    return <RemoveButtonTable disabled />;
+  };
 
   const renderOrder = (a: boolean) => {
     if (a) {
@@ -129,8 +143,14 @@ const Order: FunctionComponent<TOrderProps> = ({ show }) => {
                           return (
                             <OrderItem type={OrderItemEnum.item} key={item.id}>
                               <OrderItemProperty>{item.name}</OrderItemProperty>
-                              <OrderItemProperty>
+                              <OrderItemProperty flex>
+                                {renderRemoveButton(item)}
                                 {item.quantity}
+                                <AddButtonTable
+                                  onClick={() =>
+                                    dispatch(addItem(item.id, false))
+                                  }
+                                />
                               </OrderItemProperty>
                               <OrderItemProperty>
                                 {itemSubtotal}

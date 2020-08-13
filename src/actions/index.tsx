@@ -24,13 +24,13 @@ export const getItemsAction = async (dispatch: any) => {
   }
 };
 
-export const addItem = (id: number) => {
-  store.dispatch(notificationAction("ok", "Item added"));
+export const addItem = (id: number, notify: boolean = true) => {
+  notify && store.dispatch(notificationAction("ok", "Item added"));
   return { type: ADD_ITEM, payload: id };
 };
 
-export const removeItem = (id: number) => {
-  store.dispatch(notificationAction("warn", "Item removed"));
+export const removeItem = (id: number, notify: boolean = true) => {
+  notify && store.dispatch(notificationAction("warn", "Item removed"));
   return { type: REMOVE_ITEM, payload: id };
 };
 

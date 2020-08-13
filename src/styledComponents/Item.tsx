@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import breakpoint from "styled-components-breakpoint";
 import AddOutlineSVG from "../assets/images/add_circle_outline.svg";
 import AddSVG from "../assets/images/add_circle.svg";
@@ -58,15 +58,23 @@ export const ItemInteraction = styled.div<{ state: any }>`
 
 const SVGSize = "50px";
 
-export const AddButton = styled.div`
+const cssButtonSize = css`
   width: 33.3%;
   height: ${SVGSize};
   margin: 1rem;
   cursor: pointer;
+`;
+
+const cssButtonBackground = css`
   color: ${({ theme }) => theme.colors.secondary};
   background-repeat: no-repeat;
   background-size: contain;
   background-position-x: center;
+`;
+
+export const AddButton = styled.div`
+  ${cssButtonSize};
+  ${cssButtonBackground};
   background-image: url(${AddOutlineSVG});
   &:hover {
     background-image: url(${AddSVG});
@@ -100,4 +108,24 @@ export const ItemQuantity = styled.span`
   color: ${({ theme }) => theme.colors.secondary};
   font-size: ${SVGSize};
   font-weight: bold;
+`;
+
+const orderTableButtonSize = css`
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0;
+`;
+
+export const AddButtonTable = styled(AddButton)`
+  ${orderTableButtonSize}
+  ${cssButtonBackground}
+  filter: invert(1);
+  margin-left: 0.25rem;
+`;
+
+export const RemoveButtonTable = styled(RemoveButton)`
+  ${orderTableButtonSize}
+  ${cssButtonBackground}
+  margin-right: 0.25rem;
+  filter: invert(1);
 `;
