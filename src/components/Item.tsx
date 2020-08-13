@@ -77,14 +77,14 @@ const Item = ({ id, name, ingredients, price, currency }: ItemType) => {
         {(state: any) => (
           // state change: exited -> entering -> entered -> exiting -> exited
           <ItemInteraction state={state}>
+            {renderRemoveButton()}
+            <ItemQuantity>
+              {item && item.quantity ? item.quantity : 0}
+            </ItemQuantity>
             <AddButton
               onTouchEnd={(e) => e.stopPropagation()}
               onClick={() => dispatch(addItem(id))}
             />
-            <ItemQuantity>
-              {item && item.quantity ? item.quantity : 0}
-            </ItemQuantity>
-            {renderRemoveButton()}
           </ItemInteraction>
         )}
       </Transition>

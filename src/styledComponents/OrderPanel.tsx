@@ -82,13 +82,15 @@ export const OrderInfo = styled.div`
 export const OrderTable = styled.table`
   ${breakpoint("mobile")`
     margin: 0.5rem 1.25rem 0 1.25rem;
-    width:100%; 
+    width:100%;
+    height: auto;
   `};
   ${breakpoint("tablet")`
     margin: 0.25rem;
     width:50%;
+    height: 100%;
   `};
-  height: 100%;
+
   flex-grow: 1;
   background: ${({ theme }) => theme.colors.secondary};
   color: ${({ theme }) => theme.colors.main};
