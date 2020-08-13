@@ -39,3 +39,9 @@
   border: 4px solid black;
   background-clip: padding-box;
 }
+
+@media (max-width: 500px) {
+  .Toastify__toast-container {
+    margin-top: 12vh;
+  }
+}

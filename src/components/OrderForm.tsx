@@ -8,6 +8,8 @@ import {
   ErrorMsg,
 } from "../styledComponents/OrderPanel";
 import { ItemTypeOrder } from "../types";
+import { useDispatch } from "react-redux";
+import { displayOrderPanel } from "../actions";
 
 const renderError = ({ alertClass, touched, warning, error }: any) => (
   <div>
@@ -38,22 +40,16 @@ type formProps = { itemsOrder: ItemTypeOrder[] | undefined };
 const OrderForm: FunctionComponent<
   InjectedFormProps<any, formProps> & formProps
 > = (props: any) => {
-  const onSubmitWithReCAPTCHA = async (formValues: any) => {
-    console.log({ props });
-    // const token = await recaptchaRef.current.executeAsync();
-    // const recaptchaResponse: any = await verifyRecaptchaToken(apiLaravel, token);
-    // if (recaptchaResponse.success) {
-    console.log({ formValues });
+  const dispatch = useDispatch();
+  const onSubmitForm = async (formValues: any) => {
     const response = await props.onSubmit(formValues);
-    console.log({ response });
-    response.success && props.reset();
-    // }
+    response.success && props.reset() && dispatch(displayOrderPanel(false));
   };
 
   const renderForm = () => {
     if (props.itemsOrder && props.itemsOrder.length > 0) {
       return (
-        <MyForm onSubmit={props.handleSubmit(onSubmitWithReCAPTCHA)}>
+        <MyForm onSubmit={props.handleSubmit(onSubmitForm)}>
           <Field
             component={renderInput}
             placeholder="Your Name"
@@ -76,7 +72,7 @@ const OrderForm: FunctionComponent<
             name="address"
             required
           />
-          <Button onClick={props.handleSubmit(onSubmitWithReCAPTCHA)}>
+          <Button onClick={props.handleSubmit(onSubmitForm)}>
             Confirm and Send
           </Button>
         </MyForm>

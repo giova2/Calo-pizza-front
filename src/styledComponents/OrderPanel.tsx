@@ -88,6 +88,7 @@ export const OrderTable = styled.table`
     margin: 0.25rem;
     width:50%;
   `};
+  height: 100%;
   flex-grow: 1;
   background: ${({ theme }) => theme.colors.secondary};
   color: ${({ theme }) => theme.colors.main};

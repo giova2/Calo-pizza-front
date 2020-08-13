@@ -1,6 +1,6 @@
 import React from "react";
 import { ThemeProvider } from "styled-components";
-import GlobalStyle from "./styledComponents/GlobalStyle";
+
 import theme from "./styledComponents/Theme";
 import Header from "./components/Header";
 import Order from "./components/Order";
@@ -41,7 +41,7 @@ function App() {
     return (
       <ToastContainer
         position="top-right"
-        autoClose={2000}
+        autoClose={1500}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -54,7 +54,6 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        <GlobalStyle />
         {renderToast()}
         <Order show={display} />
         <Header />

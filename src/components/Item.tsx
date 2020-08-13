@@ -20,6 +20,7 @@ import { myRound } from "../resources";
 
 const Item = ({ id, name, ingredients, price, currency }: ItemType) => {
   const [animate, setAnimate] = React.useState(false);
+  const [time, setTime] = React.useState(new Date());
   const dispatch = useDispatch();
   const orderReducer = useSelector((state: RootState) => state.orderReducer);
   const item: ItemTypeOrder | undefined =
@@ -34,21 +35,12 @@ const Item = ({ id, name, ingredients, price, currency }: ItemType) => {
     if (item && item.quantity > 0) {
       return (
         <RemoveButton
-          onTouchStart={(e) => {
-            e.stopPropagation();
-          }}
+          onTouchStart={(e) => e.stopPropagation()}
           onClick={() => dispatch(removeItem(id))}
         />
       );
     }
-    return (
-      <RemoveButton
-        onTouchStart={(e) => {
-          e.stopPropagation();
-        }}
-        disabled
-      />
-    );
+    return <RemoveButton onTouchStart={(e) => e.stopPropagation()} disabled />;
   };
   const renderPrice = () => {
     if (actualCurrency === USD) {
@@ -59,9 +51,14 @@ const Item = ({ id, name, ingredients, price, currency }: ItemType) => {
 
   return (
     <ItemContainer
-      onTouchStart={(e) => {
-        setAnimate(!animate);
+      onTouchEnd={(e) => {
+        const newTime = new Date();
+        const dif = newTime.getTime() - time.getTime();
+        if (dif < 100) {
+          setAnimate(!animate);
+        }
       }}
+      onTouchStart={(e) => setTime(new Date())}
       onMouseEnter={() => {
         setAnimate(true);
       }}
@@ -81,9 +78,7 @@ const Item = ({ id, name, ingredients, price, currency }: ItemType) => {
           // state change: exited -> entering -> entered -> exiting -> exited
           <ItemInteraction state={state}>
             <AddButton
-              onTouchStart={(e) => {
-                e.stopPropagation();
-              }}
+              onTouchEnd={(e) => e.stopPropagation()}
               onClick={() => dispatch(addItem(id))}
             />
             <ItemQuantity>
