@@ -15,12 +15,11 @@ export const OrderPanelContainer = styled.div`
 export const OrderPanel = styled.div<{ state: any }>`
   ${breakpoint("mobile")`
     width: 95vw;
-    height: 90vh;
   `}
   ${breakpoint("tablet")`
     width: 60vw;
-    height: 70vh;
   `}
+  height:auto;
   min-height: 300px;
   display: flex;
   flex-direction: column;
