@@ -14,7 +14,7 @@ import Item from "./Item";
 import { RootState } from "../reducers";
 
 const ItemList = () => {
-  const [filterSize, setFilterSize] = React.useState(Object.values(Sizes)[0]);
+  const [filterSize, setFilterSize] = React.useState(Object.values(Sizes)[2]);
   const [filterName, setFilterName] = React.useState("");
   const orderReducer = useSelector((state: RootState) => state.orderReducer);
   const Items = orderReducer?.items;
@@ -40,6 +40,14 @@ const ItemList = () => {
   numSizes[Sizes.small] = numSizeSmall;
   numSizes[Sizes.medium] = numSizeMedium;
   numSizes[Sizes.large] = numSizeLarge;
+  React.useEffect(() => {
+    Object.values(Sizes).forEach((val) => {
+      if (numSizes[val] > 0) {
+        setFilterSize(val);
+      }
+    });
+  }, [numSizeSmall, numSizeMedium, numSizeLarge]);
+
   const renderItems = () => {
     return Items.map((i: ItemType) => {
       const itemOrder: ItemTypeOrder | undefined =
