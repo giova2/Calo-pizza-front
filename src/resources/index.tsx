@@ -85,9 +85,34 @@ export const myRound = (x: number) => {
   return Math.round((x + Number.EPSILON) * 100) / 100;
 };
 
+/**
+ * WARNING! THIS FUNCTIONS CONVERTS THE VALUE TO STRING, USE IT JUST FOR DISPLAY PURPOSES!
+ * @param x
+ */
+export const showTwoDecimalsStrict = (x: number | undefined) => {
+  if (x) {
+    const str = x.toString();
+    const indexComma = str.indexOf(".");
+    if (indexComma !== -1) {
+      if (!str[indexComma + 2]) {
+        return `${str}0`;
+      }
+    }
+    return str;
+  }
+};
+
+const zeroAtLeft = (someKindOfDate: number) => {
+  return someKindOfDate < 10 ? `0${someKindOfDate}` : someKindOfDate;
+};
+
 export const formatDate = (d: Date) => {
   const date = new Date(d);
-  return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+  return `${zeroAtLeft(date.getDate())}/${zeroAtLeft(
+    date.getMonth()
+  )}/${date.getFullYear()} ${zeroAtLeft(date.getHours())}:${zeroAtLeft(
+    date.getMinutes()
+  )}`;
 };
 
 export const Items: ItemType[] = [

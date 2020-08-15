@@ -1,5 +1,6 @@
 export const ADD_ITEM = "ADD_ITEM";
 export const REMOVE_ITEM = "REMOVE_ITEM";
+export const DELETE_ITEM = "DELETE_ITEM";
 export const MAKE_ORDER = "MAKE_ORDER";
 export const DISPLAY_ORDER_PANEL = "DISPLAY_ORDER_PANEL";
 export const SET_CURRENCY = "SET_CURRENCY";

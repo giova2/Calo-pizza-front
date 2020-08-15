@@ -10,6 +10,23 @@ export const OrdersMade = styled.div<{ visible: boolean | undefined }>`
   display: ${({ visible }) => (visible ? "flex" : "none")};
   flex-direction: column;
   justify-content: center;
+  &::after {
+    content: "Your Orders";
+    font-family: ${({ theme }) => theme.fonts.secondary};
+    font-size: ${({ theme }) => theme.fontSize.secondary};
+    font-weight: bold;
+    position: absolute;
+    ${breakpoint("mobile")`
+      left: 0;
+      top: 15%;
+      right: unset;
+    `}
+    ${breakpoint("tablet")`
+      left: unset;
+      top: unset;
+      right: 67%;
+    `}
+  }
 `;
 
 export const PizzaImg = styled.img`

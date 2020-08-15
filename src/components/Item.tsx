@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../reducers";
 import { ItemTypeOrder, Sizes } from "../types";
 import { USD } from "../constants";
-import { myRound } from "../resources";
+import { myRound, showTwoDecimalsStrict } from "../resources";
 
 type ItemProps = ItemType & { filterSize: Sizes; quantity: number };
 
@@ -53,9 +53,9 @@ const Item = ({
   };
   const renderPrice = () => {
     if (actualCurrency === USD) {
-      return <h4>${myRound(price * exchangeRate)}</h4>;
+      return <h4>${showTwoDecimalsStrict(myRound(price * exchangeRate))}</h4>;
     }
-    return <h4>€{price}</h4>;
+    return <h4>€{showTwoDecimalsStrict(price)}</h4>;
   };
 
   const renderInnerinteraction = () => {

@@ -18,6 +18,28 @@ const ItemList = () => {
   const [filterName, setFilterName] = React.useState("");
   const orderReducer = useSelector((state: RootState) => state.orderReducer);
   const Items = orderReducer?.items;
+  const numSizeSmall =
+    Items && Items.length > 0
+      ? Items?.map((item: ItemType) => {
+          return item.size === Object.values(Sizes)[0] ? 1 : 0;
+        }).reduce((total: number, num: number) => total + num)
+      : 0;
+  const numSizeMedium =
+    Items && Items.length > 0
+      ? Items?.map((item: ItemType) => {
+          return item.size === Object.values(Sizes)[1] ? 1 : 0;
+        }).reduce((total: number, num: number) => total + num)
+      : 0;
+  const numSizeLarge =
+    Items && Items.length > 0
+      ? Items?.map((item: ItemType) => {
+          return item.size === Object.values(Sizes)[2] ? 1 : 0;
+        }).reduce((total: number, num: number) => total + num)
+      : 0;
+  const numSizes = { small: 0, medium: 0, large: 0 };
+  numSizes[Sizes.small] = numSizeSmall;
+  numSizes[Sizes.medium] = numSizeMedium;
+  numSizes[Sizes.large] = numSizeLarge;
   const renderItems = () => {
     return Items.map((i: ItemType) => {
       const itemOrder: ItemTypeOrder | undefined =
@@ -50,15 +72,19 @@ const ItemList = () => {
         <span>
           <strong>Sizes:</strong>
         </span>
-        {Object.values(Sizes).map((val) => (
-          <ButtonSize
-            key={val}
-            selected={val === filterSize}
-            onClick={() => setFilterSize(val)}
-          >
-            {val}
-          </ButtonSize>
-        ))}
+        {Object.values(Sizes).map((val) => {
+          if (numSizes[val] > 0) {
+            return (
+              <ButtonSize
+                key={val}
+                selected={val === filterSize}
+                onClick={() => setFilterSize(val)}
+              >
+                {val}
+              </ButtonSize>
+            );
+          }
+        })}
         <SearchDiv>
           <SearchInput
             placeholder="Look for your Pizza"

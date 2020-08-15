@@ -52,6 +52,7 @@ export default function PrevOrders() {
                     <th>Date</th>
                     <th>Name</th>
                     <th>Contact</th>
+                    <th>E-mail</th>
                     <th>Address</th>
                     <th>Items</th>
                     <th>Currency</th>
@@ -66,6 +67,7 @@ export default function PrevOrders() {
                         <td>{formatDate(order.created_at)} </td>
                         <td>{order.name} </td>
                         <td>{order.contact} </td>
+                        <td>{order.email} </td>
                         <td>{order.address} </td>
                         <td>
                           <PrevOrdersItemsList items={order.items} />

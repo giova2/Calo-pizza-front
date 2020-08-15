@@ -35,6 +35,7 @@ export type OrderData = {
   name: string;
   contact: string;
   address: string;
+  email: string;
   currency: Currency;
   status: Status;
   total: number;

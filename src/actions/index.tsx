@@ -1,6 +1,7 @@
 import {
   ADD_ITEM,
   REMOVE_ITEM,
+  DELETE_ITEM,
   DISPLAY_ORDER_PANEL,
   SET_CURRENCY,
   SET_ACTUAL_CURRENCY,
@@ -19,6 +20,7 @@ import {
   EUR,
   ITEM_ADDED,
   ITEM_REMOVED,
+  ITEM_DELETED,
   ORDER_MADE,
   ORDER_CLEARED,
 } from "../constants";
@@ -72,6 +74,16 @@ export const addItem = (id: number, notify: boolean = true) => {
 export const removeItem = (id: number, notify: boolean = true) => {
   notify && store.dispatch(notificationAction("warn", ITEM_REMOVED));
   return { type: REMOVE_ITEM, payload: id };
+};
+
+export const deleteItem = (
+  id: number,
+  numItemsOrder: number,
+  notify: boolean = true
+) => {
+  numItemsOrder === 1 && store.dispatch(displayOrderPanel(false));
+  notify && store.dispatch(notificationAction("warn", ITEM_DELETED));
+  return { type: DELETE_ITEM, payload: id };
 };
 
 export const displayOrderPanel = (val: boolean) => {

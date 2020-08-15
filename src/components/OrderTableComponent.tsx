@@ -6,9 +6,9 @@ import {
   OrderItemProperty,
 } from "../styledComponents/OrderPanel";
 import { OrderItemEnum, ItemTypeOrder } from "../types";
-import { addItem, removeItem } from "../actions";
+import { addItem, removeItem, deleteItem } from "../actions";
 import { AddButtonTable, RemoveButtonTable } from "../styledComponents/Item";
-import { myRound } from "../resources";
+import { myRound, showTwoDecimalsStrict } from "../resources";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../reducers";
 import { USD } from "../constants";
@@ -56,11 +56,15 @@ const OrderTableComponent: FunctionComponent<TOrderTableProps> = ({
               Name
             </OrderItemProperty>
             <OrderItemProperty type={OrderItemEnum.header}>
+              Size
+            </OrderItemProperty>
+            <OrderItemProperty type={OrderItemEnum.header}>
               Quantity
             </OrderItemProperty>
             <OrderItemProperty type={OrderItemEnum.header}>
               Amount
             </OrderItemProperty>
+            <OrderItemProperty type={OrderItemEnum.header}></OrderItemProperty>
           </OrderItem>
           {items?.map((item) => {
             if (item) {
@@ -68,15 +72,18 @@ const OrderTableComponent: FunctionComponent<TOrderTableProps> = ({
               if (actualCurrency === USD) {
                 const tmpSubtotal = item.price * item.quantity * exchangeRate;
                 subtotal += tmpSubtotal;
-                itemSubtotal = `$${myRound(tmpSubtotal)}`;
+                itemSubtotal = `$${showTwoDecimalsStrict(
+                  myRound(tmpSubtotal)
+                )}`;
               } else {
                 const tmpSubtotal = item.price * item.quantity;
                 subtotal += tmpSubtotal;
-                itemSubtotal = `€${tmpSubtotal}`;
+                itemSubtotal = `€${showTwoDecimalsStrict(tmpSubtotal)}`;
               }
               return (
                 <OrderItem type={OrderItemEnum.item} key={item.id}>
                   <OrderItemProperty>{item.name}</OrderItemProperty>
+                  <OrderItemProperty>{item.size}</OrderItemProperty>
                   <OrderItemProperty flex>
                     {renderRemoveButton(item)}
                     {item.quantity}
@@ -85,6 +92,12 @@ const OrderTableComponent: FunctionComponent<TOrderTableProps> = ({
                     />
                   </OrderItemProperty>
                   <OrderItemProperty>{itemSubtotal}</OrderItemProperty>
+                  <OrderItemProperty
+                    onClick={() => dispatch(deleteItem(item.id, items.length))}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <strong>X</strong>
+                  </OrderItemProperty>
                 </OrderItem>
               );
             }
@@ -92,25 +105,35 @@ const OrderTableComponent: FunctionComponent<TOrderTableProps> = ({
           <OrderItem type={OrderItemEnum.subtotal}>
             <OrderItemProperty>Subtotal</OrderItemProperty>
             <OrderItemProperty></OrderItemProperty>
-            <OrderItemProperty>{`${actualCurrency === USD ? "$" : "€"}${myRound(
-              subtotal
-            )}`}</OrderItemProperty>
+            <OrderItemProperty></OrderItemProperty>
+            <OrderItemProperty>{`${
+              actualCurrency === USD ? "$" : "€"
+            }${showTwoDecimalsStrict(myRound(subtotal))}`}</OrderItemProperty>
+            <OrderItemProperty></OrderItemProperty>
           </OrderItem>
           <OrderItem type={OrderItemEnum.fees}>
             <OrderItemProperty>Delivery fee</OrderItemProperty>
             <OrderItemProperty></OrderItemProperty>
+            <OrderItemProperty></OrderItemProperty>
             <OrderItemProperty>{`${
-              actualCurrency === USD ? "$" + myRound(10 * exchangeRate) : "€10"
+              actualCurrency === USD
+                ? "$" + showTwoDecimalsStrict(myRound(10 * exchangeRate))
+                : "€10"
             }`}</OrderItemProperty>
+            <OrderItemProperty></OrderItemProperty>
           </OrderItem>
           <OrderItem type={OrderItemEnum.total}>
             <OrderItemProperty type={OrderItemEnum.total}>
               TOTAL
             </OrderItemProperty>
             <OrderItemProperty type={OrderItemEnum.total}></OrderItemProperty>
+            <OrderItemProperty type={OrderItemEnum.total}></OrderItemProperty>
             <OrderItemProperty type={OrderItemEnum.total}>{`${
               actualCurrency === USD ? "$" : "€"
-            }${totalExpressedInActualCurrency}`}</OrderItemProperty>
+            }${showTwoDecimalsStrict(
+              totalExpressedInActualCurrency
+            )}`}</OrderItemProperty>
+            <OrderItemProperty type={OrderItemEnum.total}></OrderItemProperty>
           </OrderItem>
         </OrderTableBody>
       </OrderTable>

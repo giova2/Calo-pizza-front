@@ -1,6 +1,7 @@
 import {
   ADD_ITEM,
   REMOVE_ITEM,
+  DELETE_ITEM,
   DISPLAY_ORDER_PANEL,
   SET_CURRENCY,
   SET_ACTUAL_CURRENCY,
@@ -97,6 +98,25 @@ export default (state = INITIAL_STATE, action: reduxAction) => {
             ...state,
             itemsOrder: newItems,
             total: state.total - existed_item.price,
+          };
+        }
+      }
+      break;
+    case DELETE_ITEM:
+      if (tmpItem) {
+        const newItems: ItemTypeOrder[] = [];
+        itemsOrder.forEach((obj) => newItems.push({ ...obj }));
+        const existed_item: ItemTypeOrder | undefined = newItems.find(
+          (item) => action.payload === item.id
+        );
+        if (existed_item) {
+          const newItemsWithoutItem = [...newItems].filter(
+            (elem: ItemTypeOrder) => elem.id !== existed_item.id
+          );
+          return {
+            ...state,
+            itemsOrder: newItemsWithoutItem,
+            total: state.total - existed_item.price * existed_item.quantity,
           };
         }
       }

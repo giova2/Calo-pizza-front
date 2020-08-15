@@ -67,6 +67,13 @@ const OrderForm: FunctionComponent<
           />
           <Field
             component={renderInput}
+            placeholder="Your Contact e-mail"
+            type="email"
+            name="email"
+            required
+          />
+          <Field
+            component={renderInput}
             placeholder="Your Delivery Address (Street, number, apartment number)"
             type="text"
             name="address"
@@ -90,15 +97,20 @@ const OrderForm: FunctionComponent<
 
 const validate = (formValues: any) => {
   const errors: any = {};
-  if (!formValues.contact || !/^[0-9]+$/.test(formValues.contact)) {
-    errors.contact = "Must be just numbers";
-  }
-
   if (!formValues.name || !/^[A-Za-z\s]+$/.test(formValues.name)) {
     errors.name = "Must be just alphabetic characters and/or spaces";
   }
-  if (!formValues.address) {
-    errors.address = "Address is an obligatory field";
+  if (!formValues.contact || !/^[0-9]+$/.test(formValues.contact)) {
+    errors.contact = "Must be just numbers";
+  }
+  if (
+    !formValues.email ||
+    !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(formValues.email)
+  ) {
+    errors.email = "E-mail format is not valid";
+  }
+  if (!formValues.address || !/^[\w',-\\/.\s]+$/.test(formValues.address)) {
+    errors.address = "Address is not in the correct format";
   }
   return errors;
 };

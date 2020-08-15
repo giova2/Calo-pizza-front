@@ -57,6 +57,7 @@ const Order: FunctionComponent<TOrderProps> = ({ show }) => {
       created_at: new Date(),
       name: formValues.name,
       contact: formValues.contact,
+      email: formValues.email,
       address: formValues.address,
       currency: actualCurrency,
       status: Status.pending,
@@ -110,7 +111,11 @@ const Order: FunctionComponent<TOrderProps> = ({ show }) => {
                 </Clear>
                 <OrderInfo>
                   <OrderTableComponent />
-                  <OrderForm itemsOrder={items} onSubmit={handleSubmitOrder} />
+                  <OrderForm
+                    itemsOrder={items}
+                    onSubmit={handleSubmitOrder}
+                    initialValues={{ email: auth.email }}
+                  />
                 </OrderInfo>
               </OrderPanel>
             )}
