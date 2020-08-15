@@ -64,14 +64,12 @@ const Order: FunctionComponent<TOrderProps> = ({ show }) => {
         ? totalExpressedInActualCurrency
         : -1,
     };
-    console.log({ newOrder });
 
     let response = { success: true };
     const userId = auth.userId;
     try {
       await makeOrderAction(dispatch, newOrder, userId); // apiLaravel,
     } catch (error) {
-      console.log({ error });
       response = { success: false };
       dispatch(notificationAction("error", error.message));
     }

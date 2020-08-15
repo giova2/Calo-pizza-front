@@ -35,10 +35,8 @@ import { store } from "../index";
 export const listUserOrders = async (userId: string) => {
   try {
     const response = await getOrders(userId);
-    console.log({ response });
     store.dispatch({ type: GET_ORDERS, payload: response });
   } catch (error) {
-    console.log({ error });
     store.dispatch(notificationAction("error", error));
   }
 };
@@ -62,7 +60,6 @@ export const getItemsAction = async (dispatch: any) => {
     const items = await getItems();
     dispatch({ type: GET_ITEMS, payload: items });
   } catch (error) {
-    console.log({ error });
     dispatch(notificationAction("error", error));
   }
 };
@@ -96,7 +93,6 @@ export const getCurrencyRate = async (
       },
     });
   } catch (error) {
-    console.log({ error });
     dispatch(notificationAction("error", error));
   }
 };
@@ -124,7 +120,6 @@ export const makeOrderAction = async (
       dispatch({ type: MAKE_ORDER, payload: response.data.success });
     }
   } catch (error) {
-    console.log({ error });
     dispatch(notificationAction("error", error));
   }
 };

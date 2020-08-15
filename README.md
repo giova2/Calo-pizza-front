@@ -29,3 +29,7 @@ App to make orders throw an api. You will be able to:
 8. Execute `$git push heroku master` to do our first deployment
 
 9. Everything should work smoothly.
+
+# Advice
+
+To use Oauth in your domain you shoul create an api and credentials in google console and add your domains to the white list.

@@ -133,7 +133,6 @@ export default (state = INITIAL_STATE, action: reduxAction) => {
       const itemOrders = action.payload.map(({ order, items }: any) => {
         return { ...order, items };
       });
-      console.log({ itemOrders });
 
       return {
         ...state,
