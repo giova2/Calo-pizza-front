@@ -1,28 +1,72 @@
 import React from "react";
 // import { Items } from "../resources";
-import { ItemType } from "../types";
+import { ItemType, ItemTypeOrder, Sizes } from "../types";
 import {
   ContainerListItems,
   ListItems,
   HeaderList,
+  ButtonSize,
+  SearchDiv,
+  SearchInput,
 } from "../styledComponents/ListItems";
 import { useSelector } from "react-redux";
 import Item from "./Item";
 import { RootState } from "../reducers";
 
 const ItemList = () => {
-  const Items = useSelector((state: RootState) => state.orderReducer?.items);
+  const [filterSize, setFilterSize] = React.useState(Object.values(Sizes)[0]);
+  const [filterName, setFilterName] = React.useState("");
+  const orderReducer = useSelector((state: RootState) => state.orderReducer);
+  const Items = orderReducer?.items;
+  const renderItems = () => {
+    return Items.map((i: ItemType) => {
+      const itemOrder: ItemTypeOrder | undefined =
+        orderReducer && orderReducer.itemsOrder
+          ? orderReducer.itemsOrder.find(
+              (item: ItemTypeOrder) => item.id === i.id
+            )
+          : undefined;
+      const quantity = itemOrder && itemOrder.quantity ? itemOrder.quantity : 0;
+      if (
+        filterName === "" ||
+        i.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+      ) {
+        return (
+          <Item
+            {...i}
+            quantity={quantity}
+            filterSize={filterSize}
+            key={i.name + i.id}
+          />
+        );
+      }
+    });
+  };
   return (
     <ContainerListItems>
       <div>
         <HeaderList> Menú </HeaderList>
         <hr className="accessory" />
-      </div>
-      <ListItems>
-        {Items.map((i: ItemType) => (
-          <Item {...i} key={i.name} />
+        <span>
+          <strong>Sizes:</strong>
+        </span>
+        {Object.values(Sizes).map((val) => (
+          <ButtonSize
+            key={val}
+            selected={val === filterSize}
+            onClick={() => setFilterSize(val)}
+          >
+            {val}
+          </ButtonSize>
         ))}
-      </ListItems>
+        <SearchDiv>
+          <SearchInput
+            placeholder="Look for your Pizza"
+            onKeyUp={(e: any) => setFilterName(e.target.value)}
+          />
+        </SearchDiv>
+      </div>
+      <ListItems>{renderItems()}</ListItems>
     </ContainerListItems>
   );
 };

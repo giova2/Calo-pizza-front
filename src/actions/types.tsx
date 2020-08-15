@@ -7,8 +7,17 @@ export const SET_ACTUAL_CURRENCY = "SET_ACTUAL_CURRENCY";
 export const GET_ITEMS = "GET_ITEMS";
 export const NOTIFICATION = "NOTIFICATION";
 export const DISPLAY_PREV_ORDERS = "DISPLAY_PREV_ORDERS";
+export const SIGN_IN = "SIGN_IN";
+export const SIGN_OUT = "SIGN_OUT";
+export const GET_ORDERS = "GET_ORDERS";
+export const CLEAR_ORDER = "CLEAR_ORDER";
 
 export type reduxAction = {
   type: string;
   payload?: any;
+};
+
+export type apiUser = {
+  userId: string;
+  email: string;
 };

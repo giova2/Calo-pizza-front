@@ -56,6 +56,18 @@ export const Close = styled.span`
     padding-right: ${({ theme }) => theme.fontSize.mobile};
   `}
 `;
+export const Clear = styled.button`
+  width: fit-content;
+  align-self: center;
+  position: relative;
+  color: ${({ theme }) => theme.colors.main};
+  cursor: pointer;
+  font-weight: bold;
+  &::before {
+    content: "🗑";
+    margin-right: 0.75rem;
+  }
+`;
 
 export const OrderHeader = styled.div`
   margin-top: 0.5rem;
@@ -89,9 +101,10 @@ export const OrderTable = styled.table`
     width:50%;
     height: 100%;
   `};
-
   flex-grow: 1;
   background: ${({ theme }) => theme.colors.secondary};
+  font-family: ${({ theme }) => theme.fonts.secondary};
+  font-size: ${({ theme }) => theme.fontSize.secondary};
   color: ${({ theme }) => theme.colors.main};
   border-collapse: collapse;
 `;

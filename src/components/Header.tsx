@@ -1,11 +1,18 @@
 import React from "react";
 import { HeaderContainer } from "../styledComponents/HeaderContainer";
 import { HeaderItem } from "../styledComponents/HeaderItem";
-import { ShoppingCartButton } from "../styledComponents/ShoppingCartButton";
 import {
   CurrencyContainer,
   Currency,
-} from "../styledComponents/CurrencyButtons";
+} from "../styledComponents/HeaderItemThird";
+import { OrderTableHoverContainer } from "../styledComponents/HeaderItemSecond";
+import GoogleOAuth from "./GoogleAuth.js";
+
+import {
+  ShoppingCartButton,
+  ShoppingCartImg,
+} from "../styledComponents/HeaderItemSecond";
+
 import ShoppingCartSVG from "../assets/images/shopping_cart2.svg";
 import DollarSVG from "../assets/images/dollar.svg";
 import DollarSVGColored from "../assets/images/dollar_colored.svg";
@@ -16,20 +23,22 @@ import { RootState } from "../reducers";
 import { displayOrderPanel, setActualCurrency } from "../actions";
 import { USD, EUR } from "../constants";
 import PrevOrders from "./PrevOrders";
+import OrderTableComponent from "./OrderTableComponent";
 
 const Header = () => {
+  const [displayTable, setDisplayTable] = React.useState(false);
   const orderReducer = useSelector((state: RootState) => state.orderReducer);
   const itemsOrder = orderReducer?.itemsOrder;
   const actualCurrency = orderReducer?.actualCurrency;
   const dispatch = useDispatch();
-  // const quantity =
-  //   itemsOrder && itemsOrder.length > 0
-  //     ? itemsOrder
-  //         ?.map((item) => {
-  //           return item.quantity;
-  //         })
-  //         .reduce((total, num) => total + num)
-  //     : 0;
+  const quantity =
+    itemsOrder && itemsOrder.length > 0
+      ? itemsOrder
+          ?.map((item) => {
+            return item.quantity;
+          })
+          .reduce((total, num) => total + num)
+      : 0;
 
   return (
     <HeaderContainer>
@@ -39,13 +48,22 @@ const Header = () => {
       </HeaderItem>
       <HeaderItem>
         <ShoppingCartButton
-          animate={orderReducer?.display !== true}
-          visible={itemsOrder && itemsOrder.length > 0}
-          src={ShoppingCartSVG}
-          onClick={() => dispatch(displayOrderPanel(true))}
-        />
+          quantity={quantity}
+          onMouseOver={() => setDisplayTable(true)}
+          onMouseLeave={() => setDisplayTable(false)}
+        >
+          <ShoppingCartImg
+            animate={orderReducer?.display !== true}
+            visible={itemsOrder && itemsOrder.length > 0}
+            src={ShoppingCartSVG}
+            onClick={() => dispatch(displayOrderPanel(true))}
+          />
+        </ShoppingCartButton>
+        <OrderTableHoverContainer>
+          <OrderTableComponent display={displayTable} />
+        </OrderTableHoverContainer>
       </HeaderItem>
-      <HeaderItem>
+      <HeaderItem itemsCentered>
         <CurrencyContainer>
           <Currency
             selected={actualCurrency === USD}
@@ -58,6 +76,7 @@ const Header = () => {
             onClick={() => dispatch(setActualCurrency(EUR))}
           />
         </CurrencyContainer>
+        <GoogleOAuth />
       </HeaderItem>
     </HeaderContainer>
   );

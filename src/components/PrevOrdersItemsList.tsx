@@ -19,8 +19,8 @@ const PrevOrdersItemsList = (props: myProps) => {
           </span>
           <ul>
             {props.items.map((item: ItemTypeOrder) => (
-              <li>
-                {item.name} : {item.quantity}
+              <li key={item.name + item.size}>
+                {item.name} : {item.size} :{item.quantity}
               </li>
             ))}
           </ul>

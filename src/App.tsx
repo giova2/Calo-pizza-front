@@ -31,7 +31,6 @@ function App() {
     if (orderReducer?.items.length === 0) {
       getItemsAction(dispatch);
     }
-
     return () => {
       dispatch(notificationAction(null, null));
     };

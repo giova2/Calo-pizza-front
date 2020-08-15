@@ -8,13 +8,14 @@ import {
   PanelHeader,
   ClosePanel,
   Close,
-} from "../styledComponents/HeaderItem";
+} from "../styledComponents/HeaderItemFirst";
 import { OrderData } from "../types";
 import pizzaSVG from "../assets/images/pizza.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../reducers";
 import { displayPrevOrdersAction } from "../actions";
 import PrevOrdersItemsList from "./PrevOrdersItemsList";
+import { formatDate } from "../resources";
 
 export default function PrevOrders() {
   const orderReducer = useSelector((state: RootState) => state.orderReducer);
@@ -23,6 +24,7 @@ export default function PrevOrders() {
     ? orderReducer.displayPrevOrders
     : false;
   const orders = orderReducer ? orderReducer.orders : [];
+  React.useEffect(() => {}, [orderReducer?.orders]);
   const dispatch = useDispatch();
   const renderPanel = () => {
     if (displayPrevOrders) {
@@ -46,17 +48,22 @@ export default function PrevOrders() {
             <div style={{ overflow: "auto" }}>
               <PanelTable>
                 <thead>
-                  <th>Name</th>
-                  <th>Contact</th>
-                  <th>Address</th>
-                  <th>Items</th>
-                  <th>Currency</th>
-                  <th>Total</th>
+                  <tr>
+                    <th>Date</th>
+                    <th>Name</th>
+                    <th>Contact</th>
+                    <th>Address</th>
+                    <th>Items</th>
+                    <th>Currency</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                  </tr>
                 </thead>
                 <tbody>
                   {orders.map((order: OrderData) => {
                     return (
                       <tr key={order.total + Math.random()}>
+                        <td>{formatDate(order.created_at)} </td>
                         <td>{order.name} </td>
                         <td>{order.contact} </td>
                         <td>{order.address} </td>
@@ -65,6 +72,7 @@ export default function PrevOrders() {
                         </td>
                         <td>{order.currency} </td>
                         <td>{order.total} </td>
+                        <td>{order.status} </td>
                       </tr>
                     );
                   })}

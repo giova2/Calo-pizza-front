@@ -7,6 +7,8 @@ import {
   GET_ITEMS,
   NOTIFICATION,
   MAKE_ORDER,
+  GET_ORDERS,
+  CLEAR_ORDER,
   DISPLAY_PREV_ORDERS,
   reduxAction,
 } from "../actions/types";
@@ -29,7 +31,7 @@ const INITIAL_STATE: {
   displayPrevOrders: boolean;
 } = {
   display: false,
-  items: Items,
+  items: [], //Items,
   itemsOrder: [],
   actualCurrency: EUR,
   exchangeRate: null,
@@ -127,8 +129,20 @@ export default (state = INITIAL_STATE, action: reduxAction) => {
         itemsOrder: [],
         total: DELIVERY_FEE,
       };
+    case GET_ORDERS:
+      const itemOrders = action.payload.map(({ order, items }: any) => {
+        return { ...order, items };
+      });
+      console.log({ itemOrders });
+
+      return {
+        ...state,
+        orders: [...state.orders, ...itemOrders],
+      };
     case DISPLAY_PREV_ORDERS:
       return { ...state, displayPrevOrders: action.payload };
+    case CLEAR_ORDER:
+      return { ...state, itemsOrder: [] };
     default:
       return state;
   }

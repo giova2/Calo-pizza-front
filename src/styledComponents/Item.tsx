@@ -8,7 +8,15 @@ import RemoveSVG from "../assets/images/remove_circle.svg";
 import RemoveSVGDisabled from "../assets/images/remove_circle_disabled.svg";
 import RemoveSVGColored from "../assets/images/remove_circle_colored.svg";
 
-export const ItemContainer = styled.div`
+const Hide = css`
+  display: none;
+`;
+
+export const ItemContainer = styled.div<{
+  itemImg?: string;
+  displayItem: boolean;
+}>`
+  ${({ displayItem }) => (displayItem ? "" : Hide)};
   ${breakpoint("mobile")`
     width: 100%;
   `}
@@ -20,7 +28,12 @@ export const ItemContainer = styled.div`
   min-height: 250px;
   margin: 1.666%;
   background: rgba(0, 0, 0, 0.5);
+  background-image: ${({ itemImg }) => (itemImg ? "url(" + itemImg + ")" : "")};
+  background-blend-mode: color-burn;
+  background-position: center;
+  background-size: cover;
   overflow: hidden;
+  filter: ${({ itemImg }) => (itemImg ? "drop-shadow(2px 4px 6px black)" : "")};
 `;
 
 export const ItemTop = styled.div`
@@ -29,6 +42,7 @@ export const ItemTop = styled.div`
   justify-content: center;
   align-items: center;
   color: ${({ theme }) => theme.colors.secondary};
+  /* text-shadow: ${({ theme }) => theme.colors.secondary} 1px 1px 4px; */
 `;
 
 export const ItemMiddle = styled(ItemTop)`

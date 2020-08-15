@@ -90,11 +90,12 @@ const OrderForm: FunctionComponent<
 
 const validate = (formValues: any) => {
   const errors: any = {};
-  if (!formValues.contact) {
-    errors.contact = "Contact Phone is an obligatory field";
+  if (!formValues.contact || !/^[0-9]+$/.test(formValues.contact)) {
+    errors.contact = "Must be just numbers";
   }
-  if (!formValues.name) {
-    errors.name = "Name is an obligatory field";
+
+  if (!formValues.name || !/^[A-Za-z\s]+$/.test(formValues.name)) {
+    errors.name = "Must be just alphabetic characters and/or spaces";
   }
   if (!formValues.address) {
     errors.address = "Address is an obligatory field";

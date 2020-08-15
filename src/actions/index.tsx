@@ -8,11 +8,54 @@ import {
   NOTIFICATION,
   MAKE_ORDER,
   DISPLAY_PREV_ORDERS,
+  SIGN_IN,
+  SIGN_OUT,
+  GET_ORDERS,
+  CLEAR_ORDER,
+  apiUser,
 } from "./types";
-import { USD, EUR } from "../constants";
-import { getRates, myRound, getItems, makeOrder } from "../resources";
+import {
+  USD,
+  EUR,
+  ITEM_ADDED,
+  ITEM_REMOVED,
+  ORDER_MADE,
+  ORDER_CLEARED,
+} from "../constants";
+import {
+  getRates,
+  myRound,
+  getItems,
+  makeOrder,
+  getOrders,
+} from "../resources";
 import { OrderData } from "../types";
 import { store } from "../index";
+
+export const listUserOrders = async (userId: string) => {
+  try {
+    const response = await getOrders(userId);
+    console.log({ response });
+    store.dispatch({ type: GET_ORDERS, payload: response });
+  } catch (error) {
+    console.log({ error });
+    store.dispatch(notificationAction("error", error));
+  }
+};
+
+export const signIn = (user: apiUser) => {
+  listUserOrders(user.userId);
+  return {
+    type: SIGN_IN,
+    payload: user,
+  };
+};
+
+export const signOut = () => {
+  return {
+    type: SIGN_OUT,
+  };
+};
 
 export const getItemsAction = async (dispatch: any) => {
   try {
@@ -25,12 +68,12 @@ export const getItemsAction = async (dispatch: any) => {
 };
 
 export const addItem = (id: number, notify: boolean = true) => {
-  notify && store.dispatch(notificationAction("ok", "Item added"));
+  notify && store.dispatch(notificationAction("ok", ITEM_ADDED));
   return { type: ADD_ITEM, payload: id };
 };
 
 export const removeItem = (id: number, notify: boolean = true) => {
-  notify && store.dispatch(notificationAction("warn", "Item removed"));
+  notify && store.dispatch(notificationAction("warn", ITEM_REMOVED));
   return { type: REMOVE_ITEM, payload: id };
 };
 
@@ -69,13 +112,15 @@ export const notificationAction = (
   return { type: NOTIFICATION, payload: { type, message } };
 };
 
-export const makeOrderAction = async (dispatch: any, newOrder: OrderData) => {
+export const makeOrderAction = async (
+  dispatch: any,
+  newOrder: OrderData,
+  userId?: string
+) => {
   try {
-    const response = await makeOrder(newOrder);
+    const response = await makeOrder(newOrder, userId);
     if (response && response.data && response.data.success) {
-      dispatch(
-        notificationAction("ok", "🍕 Your order was sent successfully, Thanks!")
-      );
+      dispatch(notificationAction("ok", ORDER_MADE));
       dispatch({ type: MAKE_ORDER, payload: response.data.success });
     }
   } catch (error) {
@@ -85,4 +130,9 @@ export const makeOrderAction = async (dispatch: any, newOrder: OrderData) => {
 };
 export const displayPrevOrdersAction = (display: boolean) => {
   return { type: DISPLAY_PREV_ORDERS, payload: display };
+};
+
+export const clearOrderAction = () => {
+  store.dispatch(notificationAction("ok", ORDER_CLEARED));
+  return { type: CLEAR_ORDER, payload: true };
 };

@@ -14,25 +14,34 @@ import { Transition } from "react-transition-group";
 import { addItem, removeItem } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../reducers";
-import { ItemTypeOrder } from "../types";
+import { ItemTypeOrder, Sizes } from "../types";
 import { USD } from "../constants";
 import { myRound } from "../resources";
 
-const Item = ({ id, name, ingredients, price, currency }: ItemType) => {
+type ItemProps = ItemType & { filterSize: Sizes; quantity: number };
+
+const Item = ({
+  id,
+  name,
+  ingredients,
+  image_url,
+  size,
+  price,
+  currency,
+  quantity,
+  filterSize,
+}: ItemProps) => {
   const [animate, setAnimate] = React.useState(false);
   const [time, setTime] = React.useState(new Date());
   const dispatch = useDispatch();
   const orderReducer = useSelector((state: RootState) => state.orderReducer);
-  const item: ItemTypeOrder | undefined =
-    orderReducer && orderReducer.itemsOrder
-      ? orderReducer.itemsOrder.find((item: ItemTypeOrder) => item.id === id)
-      : undefined;
   const actualCurrency = orderReducer?.actualCurrency;
   const exchangeRate = orderReducer?.exchangeRate
     ? orderReducer.exchangeRate.rate
     : 0;
+
   const renderRemoveButton = () => {
-    if (item && item.quantity > 0) {
+    if (quantity > 0) {
       return (
         <RemoveButton
           onTouchStart={(e) => e.stopPropagation()}
@@ -49,8 +58,31 @@ const Item = ({ id, name, ingredients, price, currency }: ItemType) => {
     return <h4>€{price}</h4>;
   };
 
+  const renderInnerinteraction = () => {
+    if (quantity > 0) {
+      return (
+        <>
+          {renderRemoveButton()}
+          <ItemQuantity>{quantity}</ItemQuantity>
+          <AddButton
+            onTouchEnd={(e) => e.stopPropagation()}
+            onClick={() => dispatch(addItem(id))}
+          />
+        </>
+      );
+    }
+    return (
+      <AddButton
+        onTouchEnd={(e) => e.stopPropagation()}
+        onClick={() => dispatch(addItem(id))}
+      />
+    );
+  };
+
   return (
     <ItemContainer
+      displayItem={size === filterSize}
+      itemImg={image_url}
       onTouchEnd={(e) => {
         const newTime = new Date();
         const dif = newTime.getTime() - time.getTime();
@@ -77,14 +109,7 @@ const Item = ({ id, name, ingredients, price, currency }: ItemType) => {
         {(state: any) => (
           // state change: exited -> entering -> entered -> exiting -> exited
           <ItemInteraction state={state}>
-            {renderRemoveButton()}
-            <ItemQuantity>
-              {item && item.quantity ? item.quantity : 0}
-            </ItemQuantity>
-            <AddButton
-              onTouchEnd={(e) => e.stopPropagation()}
-              onClick={() => dispatch(addItem(id))}
-            />
+            {renderInnerinteraction()}
           </ItemInteraction>
         )}
       </Transition>
@@ -92,4 +117,4 @@ const Item = ({ id, name, ingredients, price, currency }: ItemType) => {
   );
 };
 
-export default Item;
+export default React.memo(Item);
