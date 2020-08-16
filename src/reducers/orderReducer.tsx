@@ -32,7 +32,7 @@ const INITIAL_STATE: {
   displayPrevOrders: boolean;
 } = {
   display: false,
-  items: [], //Items,
+  items: Items,
   itemsOrder: [],
   actualCurrency: EUR,
   exchangeRate: null,

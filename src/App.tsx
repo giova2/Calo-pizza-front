@@ -7,6 +7,7 @@ import Order from "./components/Order";
 import ItemList from "./components/ItemList";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "./reducers";
+import { Items } from "./resources";
 import { getCurrencyRate, getItemsAction, notificationAction } from "./actions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -28,7 +29,7 @@ function App() {
     if (!orderReducer?.exchangeRate) {
       getCurrencyRate(dispatch);
     }
-    if (orderReducer?.items.length === 0) {
+    if (orderReducer?.items.length === 0 || orderReducer?.items === Items) {
       getItemsAction(dispatch);
     }
     return () => {

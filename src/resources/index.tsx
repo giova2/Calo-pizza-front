@@ -124,9 +124,10 @@ export const Items: ItemType[] = [
     id: 1,
     name: "Marguerita",
     ingredients: "Tomato sauce, mozzarella, basil, oregano and olive oil.",
-    size: Sizes.medium,
-    image_url: "//unsplash.it/400/400",
-    price: 10,
+    size: Sizes.small,
+    image_url:
+      "https://pizza-test.s3.us-east-2.amazonaws.com/itemsFiles/thumbs_medium/VZkEl06VX7xqwYaz9hBnBF30LDNOG5ZQCA8TOsvS.jpeg",
+    price: 9,
     currency: Currency.EUR,
   },
   {
@@ -134,17 +135,19 @@ export const Items: ItemType[] = [
     name: "Napolitana",
     ingredients:
       "Tomato sauce, mozzarella, anchovies, oregano, capers and olive oil.",
-    size: Sizes.medium,
-    image_url: "//unsplash.it/400/400",
-    price: 10,
+    size: Sizes.small,
+    image_url:
+      "https://pizza-test.s3.us-east-2.amazonaws.com/itemsFiles/thumbs_medium/UGV3DFCz9YGkgn0UT5mAB6kQqODtohBFMstD2DTM.jpeg",
+    price: 9,
     currency: Currency.EUR,
   },
   {
     id: 3,
     name: "Pepperoni",
     ingredients: "Tomato sauce, mozzarella, salami pepperoni.",
-    size: Sizes.medium,
-    image_url: "//unsplash.it/400/400",
+    size: Sizes.small,
+    image_url:
+      "https://pizza-test.s3.us-east-2.amazonaws.com/itemsFiles/thumbs_medium/VFp0W1MNfdyeaLXh5ScZ7wCw7G6xUNttQFHQokuI.jpeg",
     price: 8,
     currency: Currency.EUR,
   },
@@ -152,8 +155,9 @@ export const Items: ItemType[] = [
     id: 4,
     name: "Four cheeses",
     ingredients: "Tomato sauce, mozzarella, fontina,  gorgonzola, parmesan.",
-    size: Sizes.medium,
-    image_url: "//unsplash.it/400/400",
+    size: Sizes.small,
+    image_url:
+      "https://pizza-test.s3.us-east-2.amazonaws.com/itemsFiles/thumbs_medium/yR6JXBxSiUOjl5mXnlfJCKdAyLWPuuQfs9dphTf2.jpeg",
     price: 12,
     currency: Currency.EUR,
   },
@@ -162,8 +166,9 @@ export const Items: ItemType[] = [
     name: "Four Seasons",
     ingredients:
       "Tomato sauce, Artichokes, olives with tomato and basil, mushrooms, Serrano ham.",
-    size: Sizes.medium,
-    image_url: "//unsplash.it/400/400",
+    size: Sizes.small,
+    image_url:
+      "https://pizza-test.s3.us-east-2.amazonaws.com/itemsFiles/thumbs_medium/bpAYs4dta2RbDxD0CzhqkX0e6t02avNVA2VJOyeF.jpeg",
     price: 12,
     currency: Currency.EUR,
   },
@@ -172,17 +177,19 @@ export const Items: ItemType[] = [
     name: "Diávola",
     ingredients:
       "Tomato sauce, chorizo, salami, spicy chili and a generous quantity of cheese.",
-    size: Sizes.medium,
-    image_url: "//unsplash.it/400/400",
-    price: 10,
+    size: Sizes.small,
+    image_url:
+      "https://pizza-test.s3.us-east-2.amazonaws.com/itemsFiles/thumbs_medium/dERIxLkzOCkM4izczkovc2QjX9hcdaLNTpfF3Str.jpeg",
+    price: 13,
     currency: Currency.EUR,
   },
   {
     id: 7,
     name: "Carbonara",
     ingredients: "egg, parmesan cheese, onion, bacon, salt and pepper.",
-    size: Sizes.medium,
-    image_url: "//unsplash.it/400/400",
+    size: Sizes.small,
+    image_url:
+      "https://pizza-test.s3.us-east-2.amazonaws.com/itemsFiles/thumbs_medium/eXrrhUpgbAKvsdXfKzdE2Evh0bD0gMNfTpKZmVEO.jpeg",
     price: 9,
     currency: Currency.EUR,
   },
@@ -190,17 +197,19 @@ export const Items: ItemType[] = [
     id: 8,
     name: "Funghi",
     ingredients: "Tomato sauce, mozzarella and Portobello's mushrooms.",
-    size: Sizes.medium,
-    image_url: "//unsplash.it/400/400",
-    price: 10,
+    size: Sizes.small,
+    image_url:
+      "https://pizza-test.s3.us-east-2.amazonaws.com/itemsFiles/thumbs_medium/LeDRgQUYKfoJ5aCT0cJ0U4uIpdNstRHF5G9jL1fL.jpeg",
+    price: 9,
     currency: Currency.EUR,
   },
   {
     id: 9,
     name: "Mexican",
     ingredients: "Tomato sauce, mozzarella, beans, chorizo ​​and jalapeños",
-    size: Sizes.medium,
-    image_url: "//unsplash.it/400/400",
+    size: Sizes.small,
+    image_url:
+      "https://pizza-test.s3.us-east-2.amazonaws.com/itemsFiles/thumbs_medium/FKetYQZP95RdNcYZhHDaYIlDIDCRrZGeBUwTFaYS.jpeg",
     price: 10,
     currency: Currency.EUR,
   },

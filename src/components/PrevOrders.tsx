@@ -24,7 +24,7 @@ export default function PrevOrders() {
     ? orderReducer.displayPrevOrders
     : false;
   const orders = orderReducer ? orderReducer.orders : [];
-  React.useEffect(() => {}, [orderReducer?.orders]);
+
   const dispatch = useDispatch();
   const renderPanel = () => {
     if (displayPrevOrders) {

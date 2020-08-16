@@ -14,7 +14,7 @@ import { Transition } from "react-transition-group";
 import { addItem, removeItem } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../reducers";
-import { ItemTypeOrder, Sizes } from "../types";
+import { Sizes } from "../types";
 import { USD } from "../constants";
 import { myRound, showTwoDecimalsStrict } from "../resources";
 

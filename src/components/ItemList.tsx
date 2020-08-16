@@ -70,6 +70,7 @@ const ItemList = () => {
           />
         );
       }
+      return "";
     });
   };
   return (
@@ -92,6 +93,7 @@ const ItemList = () => {
               </ButtonSize>
             );
           }
+          return "";
         })}
         <SearchDiv>
           <SearchInput
