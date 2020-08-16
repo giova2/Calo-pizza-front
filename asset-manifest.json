@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Calo-pizza-front/static/css/main.8d1d8820.chunk.css",
-    "main.js": "/Calo-pizza-front/static/js/main.8a2ec833.chunk.js",
-    "main.js.map": "/Calo-pizza-front/static/js/main.8a2ec833.chunk.js.map",
+    "main.js": "/Calo-pizza-front/static/js/main.162ec79a.chunk.js",
+    "main.js.map": "/Calo-pizza-front/static/js/main.162ec79a.chunk.js.map",
     "runtime-main.js": "/Calo-pizza-front/static/js/runtime-main.b2772ab1.js",
     "runtime-main.js.map": "/Calo-pizza-front/static/js/runtime-main.b2772ab1.js.map",
     "static/css/2.d34346ea.chunk.css": "/Calo-pizza-front/static/css/2.d34346ea.chunk.css",
     "static/js/2.56507ab7.chunk.js": "/Calo-pizza-front/static/js/2.56507ab7.chunk.js",
     "static/js/2.56507ab7.chunk.js.map": "/Calo-pizza-front/static/js/2.56507ab7.chunk.js.map",
     "index.html": "/Calo-pizza-front/index.html",
-    "precache-manifest.2f54146b0cb2535dc7a1041443755593.js": "/Calo-pizza-front/precache-manifest.2f54146b0cb2535dc7a1041443755593.js",
+    "precache-manifest.98df9577543c440426d1d11cabef7471.js": "/Calo-pizza-front/precache-manifest.98df9577543c440426d1d11cabef7471.js",
     "service-worker.js": "/Calo-pizza-front/service-worker.js",
     "static/css/2.d34346ea.chunk.css.map": "/Calo-pizza-front/static/css/2.d34346ea.chunk.css.map",
     "static/css/main.8d1d8820.chunk.css.map": "/Calo-pizza-front/static/css/main.8d1d8820.chunk.css.map",
@@ -35,6 +35,6 @@
     "static/css/2.d34346ea.chunk.css",
     "static/js/2.56507ab7.chunk.js",
     "static/css/main.8d1d8820.chunk.css",
-    "static/js/main.8a2ec833.chunk.js"
+    "static/js/main.162ec79a.chunk.js"
   ]
 }
