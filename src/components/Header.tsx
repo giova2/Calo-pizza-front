@@ -49,6 +49,7 @@ const Header = () => {
       <HeaderItem>
         <ShoppingCartButton
           quantity={quantity}
+          onMouseDown={() => setDisplayTable(false)}
           onMouseOver={() => setDisplayTable(true)}
           onMouseLeave={() => setDisplayTable(false)}
         >
@@ -56,7 +57,7 @@ const Header = () => {
             animate={orderReducer?.display !== true}
             visible={itemsOrder && itemsOrder.length > 0}
             src={ShoppingCartSVG}
-            onClick={() => dispatch(displayOrderPanel(true))}
+            onClick={(e) => dispatch(displayOrderPanel(true))}
           />
         </ShoppingCartButton>
         <OrderTableHoverContainer>
