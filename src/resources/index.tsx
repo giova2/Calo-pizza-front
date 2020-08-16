@@ -94,9 +94,13 @@ export const showTwoDecimalsStrict = (x: number | undefined) => {
     const str = x.toString();
     const indexComma = str.indexOf(".");
     if (indexComma !== -1) {
-      if (!str[indexComma + 2]) {
-        return `${str}0`;
+      //if it has decimals
+      const trunqued = str.substring(0, indexComma + 3); // i cut the number after 3 places including the comma
+      if (trunqued.substring(indexComma).length === 2) {
+        // if the lenght of the trunqued number from the comma is equal to 2 then it means that i have just 1 cipher after the comma
+        return `${trunqued}0`;
       }
+      return trunqued;
     }
     return str;
   }
