@@ -6,7 +6,7 @@ import {
   OrderItemProperty,
 } from "../styledComponents/OrderPanel";
 import { OrderItemEnum, ItemTypeOrder } from "../types";
-import { addItem, removeItem, deleteItem } from "../actions";
+import { addItem, removeItem, deleteItem, displayOrderPanel } from "../actions";
 import { AddButtonTable, RemoveButtonTable } from "../styledComponents/Item";
 import { myRound, showTwoDecimalsStrict } from "../resources";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,10 +15,12 @@ import { USD } from "../constants";
 
 type TOrderTableProps = {
   display?: boolean;
+  isHovering?: boolean;
 };
 
 const OrderTableComponent: FunctionComponent<TOrderTableProps> = ({
   display,
+  isHovering,
 }) => {
   const state = useSelector((state: RootState) => state);
   const orderReducer = state.orderReducer;
@@ -34,15 +36,23 @@ const OrderTableComponent: FunctionComponent<TOrderTableProps> = ({
   const dispatch = useDispatch();
   let subtotal = 0;
   const renderRemoveButton = (item: ItemTypeOrder) => {
-    if (item.quantity > 0) {
+    if (item.quantity > 0 && !isHovering) {
       return (
         <RemoveButtonTable
-          onClick={() => dispatch(removeItem(item.id, false))}
+          onClick={() => {
+            if (items?.length === 1 && item.quantity === 1) {
+              dispatch(displayOrderPanel(false));
+            }
+            dispatch(removeItem(item.id, false));
+          }}
         />
       );
     }
-    return <RemoveButtonTable disabled />;
   };
+  const renderAddButton = (item: ItemTypeOrder) =>
+    !isHovering && (
+      <AddButtonTable onClick={() => dispatch(addItem(item.id, false))} />
+    );
 
   const renderTable = () => {
     if (display === false) {
@@ -87,16 +97,14 @@ const OrderTableComponent: FunctionComponent<TOrderTableProps> = ({
                   <OrderItemProperty flex>
                     {renderRemoveButton(item)}
                     {item.quantity}
-                    <AddButtonTable
-                      onClick={() => dispatch(addItem(item.id, false))}
-                    />
+                    {renderAddButton(item)}
                   </OrderItemProperty>
                   <OrderItemProperty>{itemSubtotal}</OrderItemProperty>
                   <OrderItemProperty
                     onClick={() => dispatch(deleteItem(item.id, items.length))}
                     style={{ cursor: "pointer" }}
                   >
-                    <strong>X</strong>
+                    {!isHovering && <strong>X</strong>}
                   </OrderItemProperty>
                 </OrderItem>
               );

@@ -63,10 +63,12 @@ export const Clear = styled.button`
   color: ${({ theme }) => theme.colors.main};
   cursor: pointer;
   font-weight: bold;
+  margin: 0.25rem;
   &::before {
     content: "🗑";
     margin-right: 0.75rem;
   }
+  max-height: 10vh;
 `;
 
 export const OrderHeader = styled.div`
@@ -75,11 +77,14 @@ export const OrderHeader = styled.div`
   font-family: ${({ theme }) => theme.fonts.main};
   font-size: ${({ theme }) => theme.fontSize.main};
   color: ${({ theme }) => theme.colors.secondary};
+  max-height: 20vh;
 `;
 
 export const OrderInfo = styled.div`
   display: flex;
   justify-content: center;
+  overflow: auto;
+  max-height: 65vh;
   ${breakpoint("mobile")`
     flex-direction: column;
     align-items: center;
@@ -140,6 +145,8 @@ const chooseBorderBottom = (type: OrderItemEnum) => {
   switch (type) {
     case OrderItemEnum.header:
       return "2px solid black";
+    case OrderItemEnum.item:
+      return "1px solid grey";
   }
 };
 const chooseBorderTop = (type: OrderItemEnum) => {
@@ -151,6 +158,8 @@ const chooseBorderTop = (type: OrderItemEnum) => {
 export const OrderItem = styled.tr<{ type?: OrderItemEnum }>`
   background: ${({ type }) => type && chooseBackground(type)};
   font-weight: ${({ type }) => type && chooseFontWeight(type)};
+  border-bottom: ${({ type }) => type && chooseBorderBottom(type)};
+  border-top: ${({ type }) => type && chooseBorderTop(type)};
   width: 100%;
 `;
 
@@ -165,8 +174,6 @@ export const OrderItemProperty = styled.td<{
   type?: OrderItemEnum;
   flex?: any;
 }>`
-  border-bottom: ${({ type }) => type && chooseBorderBottom(type)};
-  border-top: ${({ type }) => type && chooseBorderTop(type)};
   ${({ flex }) => (flex ? flexProps : "")};
   ${breakpoint("mobile")`
     padding: 0;

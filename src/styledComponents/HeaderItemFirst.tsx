@@ -62,6 +62,7 @@ font-size: ${({ theme }) => theme.fontSize.secondary};
 font-family: ${({ theme }) => theme.fonts.secondary};
 overflow: auto;
 position: relative;
+max-height:70vh;
 `;
 
 export const PanelHeader = styled.div`

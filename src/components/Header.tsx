@@ -27,6 +27,7 @@ import OrderTableComponent from "./OrderTableComponent";
 
 const Header = () => {
   const [displayTable, setDisplayTable] = React.useState(false);
+  const [hoveringTable, setHoveringTable] = React.useState(false);
   const orderReducer = useSelector((state: RootState) => state.orderReducer);
   const itemsOrder = orderReducer?.itemsOrder;
   const actualCurrency = orderReducer?.actualCurrency;
@@ -49,9 +50,18 @@ const Header = () => {
       <HeaderItem>
         <ShoppingCartButton
           quantity={quantity}
-          onMouseDown={() => setDisplayTable(false)}
-          onMouseOver={() => setDisplayTable(true)}
-          onMouseLeave={() => setDisplayTable(false)}
+          onMouseDown={() => {
+            setDisplayTable(false);
+            setHoveringTable(false);
+          }}
+          onMouseOver={() => {
+            setDisplayTable(true);
+            setHoveringTable(true);
+          }}
+          onMouseLeave={() => {
+            setDisplayTable(false);
+            setHoveringTable(false);
+          }}
         >
           <ShoppingCartImg
             animate={orderReducer?.display !== true}
@@ -61,7 +71,10 @@ const Header = () => {
           />
         </ShoppingCartButton>
         <OrderTableHoverContainer>
-          <OrderTableComponent display={displayTable} />
+          <OrderTableComponent
+            display={displayTable}
+            isHovering={hoveringTable}
+          />
         </OrderTableHoverContainer>
       </HeaderItem>
       <HeaderItem itemsCentered>
@@ -70,11 +83,13 @@ const Header = () => {
             selected={actualCurrency === USD}
             src={actualCurrency === USD ? DollarSVGColored : DollarSVG}
             onClick={() => dispatch(setActualCurrency(USD))}
+            alt="USD"
           />
           <Currency
             selected={actualCurrency === EUR}
             src={actualCurrency === EUR ? EuroSVGColored : EuroSVG}
             onClick={() => dispatch(setActualCurrency(EUR))}
+            alt="EUR"
           />
         </CurrencyContainer>
         <GoogleOAuth />

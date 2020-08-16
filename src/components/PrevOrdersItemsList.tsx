@@ -17,10 +17,16 @@ const PrevOrdersItemsList = (props: myProps) => {
           >
             <strong>Close</strong>
           </span>
-          <ul>
+          <ul
+            style={{
+              maxHeight: "100px",
+              overflow: "auto",
+              textAlign: "left",
+            }}
+          >
             {props.items.map((item: ItemTypeOrder) => (
               <li key={item.name + item.size}>
-                {item.name} : {item.size} :{item.quantity}
+                {item.name} : {item.size} : {item.quantity}
               </li>
             ))}
           </ul>
