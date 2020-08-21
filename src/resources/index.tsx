@@ -41,7 +41,6 @@ export const makeOrder = async (data: OrderData, userId?: string) => {
       ? process.env.REACT_APP_API_URL + process.env.REACT_APP_API_ORDERS
       : "http://pizza-task.test/api/orders";
   const response = await axios.post(`${url}`, dataSet);
-  console.log({ response });
   return response;
 };
 

@@ -1,12 +1,15 @@
 import styled, { css } from "styled-components";
 
-export const ContainerListItems = styled.div`
+const flexColumn = css`
   display: flex;
   justify-content: center;
   flex-direction: column;
+`;
+
+export const ContainerListItems = styled.div`
+  ${flexColumn};
   width: 100%;
   height: ${({ theme }) => theme.menu.height};
-  overflow-y: auto;
 `;
 
 export const ListItems = styled.div`

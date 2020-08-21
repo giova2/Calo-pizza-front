@@ -15,6 +15,7 @@ import {
   notificationAction,
   makeOrderAction,
   clearOrderAction,
+  displayLoadingLayer,
 } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../reducers";
@@ -68,12 +69,14 @@ const Order: FunctionComponent<TOrderProps> = ({ show }) => {
 
     let response = { success: true };
     const userId = auth.userId;
+    dispatch(displayLoadingLayer(true));
     try {
       await makeOrderAction(dispatch, newOrder, userId); // apiLaravel,
     } catch (error) {
       response = { success: false };
       dispatch(notificationAction("error", error.message));
     }
+    dispatch(displayLoadingLayer(false));
     return response;
   };
 

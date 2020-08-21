@@ -4,7 +4,7 @@ import {
   OrderTableBody,
   OrderItem,
   OrderItemProperty,
-} from "../styledComponents/OrderPanel";
+} from "../styledComponents/OrderTable";
 import { OrderItemEnum, ItemTypeOrder } from "../types";
 import { addItem, removeItem, deleteItem, displayOrderPanel } from "../actions";
 import { AddButtonTable, RemoveButtonTable } from "../styledComponents/Item";

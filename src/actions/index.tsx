@@ -13,6 +13,7 @@ import {
   SIGN_OUT,
   GET_ORDERS,
   CLEAR_ORDER,
+  DISPLAY_LOADING_LAYER,
   apiUser,
 } from "./types";
 import {
@@ -66,30 +67,6 @@ export const getItemsAction = async (dispatch: any) => {
   }
 };
 
-export const addItem = (id: number, notify: boolean = true) => {
-  notify && store.dispatch(notificationAction("ok", ITEM_ADDED));
-  return { type: ADD_ITEM, payload: id };
-};
-
-export const removeItem = (id: number, notify: boolean = true) => {
-  notify && store.dispatch(notificationAction("warn", ITEM_REMOVED));
-  return { type: REMOVE_ITEM, payload: id };
-};
-
-export const deleteItem = (
-  id: number,
-  numItemsOrder: number,
-  notify: boolean = true
-) => {
-  numItemsOrder === 1 && store.dispatch(displayOrderPanel(false));
-  notify && store.dispatch(notificationAction("warn", ITEM_DELETED));
-  return { type: DELETE_ITEM, payload: id };
-};
-
-export const displayOrderPanel = (val: boolean) => {
-  return { type: DISPLAY_ORDER_PANEL, payload: val };
-};
-
 export const getCurrencyRate = async (
   dispatch: any,
   currency: string = USD
@@ -135,8 +112,39 @@ export const makeOrderAction = async (
     dispatch(notificationAction("error", error));
   }
 };
+
+export const addItem = (id: number, notify: boolean = true) => {
+  notify && store.dispatch(notificationAction("ok", ITEM_ADDED));
+  return { type: ADD_ITEM, payload: id };
+};
+
+export const removeItem = (id: number, notify: boolean = true) => {
+  notify && store.dispatch(notificationAction("warn", ITEM_REMOVED));
+  return { type: REMOVE_ITEM, payload: id };
+};
+
+export const deleteItem = (
+  id: number,
+  numItemsOrder: number,
+  notify: boolean = true
+) => {
+  numItemsOrder === 1 && store.dispatch(displayOrderPanel(false));
+  notify && store.dispatch(notificationAction("warn", ITEM_DELETED));
+  return { type: DELETE_ITEM, payload: id };
+};
+
+export const displayOrderPanel = (display: boolean) => {
+  display === true && store.dispatch(displayPrevOrdersAction(false));
+  return { type: DISPLAY_ORDER_PANEL, payload: display };
+};
+
 export const displayPrevOrdersAction = (display: boolean) => {
+  display === true && store.dispatch(displayOrderPanel(false));
   return { type: DISPLAY_PREV_ORDERS, payload: display };
+};
+
+export const displayLoadingLayer = (display: boolean) => {
+  return { type: DISPLAY_LOADING_LAYER, payload: display };
 };
 
 export const clearOrderAction = () => {

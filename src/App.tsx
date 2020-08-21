@@ -11,12 +11,14 @@ import { Items } from "./resources";
 import { getCurrencyRate, getItemsAction, notificationAction } from "./actions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loading from "./components/Loading";
 
 import "./App.css";
 
 function App() {
   const orderReducer = useSelector((state: RootState) => state.orderReducer);
   const display: boolean = orderReducer?.display;
+  const displayLoadingLayer = orderReducer?.displayLoadingLayer;
   const notification = orderReducer?.notification;
   const dispatch = useDispatch();
 
@@ -55,6 +57,7 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
         {renderToast()}
+        <Loading display={displayLoadingLayer} />
         <Order show={display} />
         <Header />
         <ItemList />

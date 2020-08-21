@@ -79,7 +79,10 @@ const OrderForm: FunctionComponent<
             name="address"
             required
           />
-          <Button onClick={props.handleSubmit(onSubmitForm)}>
+          <Button
+            onClick={props.handleSubmit(onSubmitForm)}
+            disable={!props.valid}
+          >
             Confirm and Send
           </Button>
         </MyForm>

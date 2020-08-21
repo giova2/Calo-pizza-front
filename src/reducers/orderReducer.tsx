@@ -11,6 +11,7 @@ import {
   GET_ORDERS,
   CLEAR_ORDER,
   DISPLAY_PREV_ORDERS,
+  DISPLAY_LOADING_LAYER,
   reduxAction,
 } from "../actions/types";
 import { Items } from "../resources";
@@ -30,6 +31,7 @@ const INITIAL_STATE: {
   };
   orders: OrderData[];
   displayPrevOrders: boolean;
+  displayLoadingLayer: boolean;
 } = {
   display: false,
   items: Items,
@@ -43,6 +45,7 @@ const INITIAL_STATE: {
   },
   orders: [],
   displayPrevOrders: false,
+  displayLoadingLayer: false,
 };
 
 export default (state = INITIAL_STATE, action: reduxAction) => {
@@ -160,6 +163,8 @@ export default (state = INITIAL_STATE, action: reduxAction) => {
       };
     case DISPLAY_PREV_ORDERS:
       return { ...state, displayPrevOrders: action.payload };
+    case DISPLAY_LOADING_LAYER:
+      return { ...state, displayLoadingLayer: action.payload };
     case CLEAR_ORDER:
       return { ...state, itemsOrder: [] };
     default:

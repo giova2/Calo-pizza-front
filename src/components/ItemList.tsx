@@ -11,6 +11,8 @@ import {
 } from "../styledComponents/ListItems";
 import { useSelector } from "react-redux";
 import Item from "./Item";
+import Loading from "./Loading";
+import { Items as ItemsC } from "../resources";
 import { RootState } from "../reducers";
 
 const ItemList = () => {
@@ -78,6 +80,9 @@ const ItemList = () => {
       <div>
         <HeaderList> Menú </HeaderList>
         <hr className="accessory" />
+
+        {ItemsC === Items && <Loading display={true} customHeight="menuList" />}
+
         <span>
           <strong>Sizes:</strong>
         </span>

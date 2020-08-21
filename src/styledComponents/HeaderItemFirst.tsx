@@ -22,9 +22,8 @@ export const OrdersMade = styled.div<{ visible: boolean | undefined }>`
       right: unset;
     `}
     ${breakpoint("tablet")`
-      left: unset;
+      left: 53px;
       top: unset;
-      right: 67%;
     `}
   }
 `;
