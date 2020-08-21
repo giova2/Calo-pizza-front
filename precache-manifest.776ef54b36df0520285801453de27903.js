@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "19b608fa47664dfad918665ccd3ed6d0",
+    "revision": "49a63132983fe698b6ab31cae2141130",
     "url": "/Calo-pizza-front/index.html"
   },
   {
-    "revision": "bd77182009fc9834ef51",
+    "revision": "c2bda7c5d1e6d393ba1a",
     "url": "/Calo-pizza-front/static/css/2.d34346ea.chunk.css"
   },
   {
-    "revision": "d56a991bd23eee877955",
+    "revision": "42fcb96021053af6bc72",
     "url": "/Calo-pizza-front/static/css/main.8d1d8820.chunk.css"
   },
   {
-    "revision": "bd77182009fc9834ef51",
-    "url": "/Calo-pizza-front/static/js/2.56507ab7.chunk.js"
+    "revision": "c2bda7c5d1e6d393ba1a",
+    "url": "/Calo-pizza-front/static/js/2.688231cd.chunk.js"
   },
   {
     "revision": "3453b8997016469371284a28c0e873e2",
-    "url": "/Calo-pizza-front/static/js/2.56507ab7.chunk.js.LICENSE.txt"
+    "url": "/Calo-pizza-front/static/js/2.688231cd.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "d56a991bd23eee877955",
-    "url": "/Calo-pizza-front/static/js/main.162ec79a.chunk.js"
+    "revision": "42fcb96021053af6bc72",
+    "url": "/Calo-pizza-front/static/js/main.40e77b13.chunk.js"
   },
   {
     "revision": "c05ca5be20af4c0405bd",
@@ -66,6 +66,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "44866333fd2644be84cd6b6a5b7eb7b2",
     "url": "/Calo-pizza-front/static/media/panpizza.44866333.woff"
+  },
+  {
+    "revision": "33bde0857f3bdfba432f13f29ceb55be",
+    "url": "/Calo-pizza-front/static/media/pizza-loading.33bde085.svg"
   },
   {
     "revision": "8b5ce94d08ee91e5ffc8fd0cf6c34bf1",
