@@ -7,12 +7,12 @@ import {
 
 type propsLoading = {
   customHeight?: string;
-  display?: boolean;
+  show: boolean;
 };
 
-const Loading = ({ customHeight, display }: propsLoading) => {
+const Loading = ({ customHeight, show }: propsLoading) => {
   return (
-    <LoadingContainer customHeight={customHeight} display={display}>
+    <LoadingContainer customHeight={customHeight} show={show}>
       <LoadingImg></LoadingImg>
       <LoadingText></LoadingText>
     </LoadingContainer>

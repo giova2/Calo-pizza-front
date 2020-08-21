@@ -50,14 +50,15 @@ const Header = () => {
       <HeaderItem>
         <ShoppingCartButton
           quantity={quantity}
-          onMouseDown={() => {
-            setDisplayTable(false);
-            setHoveringTable(false);
-          }}
           onMouseOver={() => {
             setDisplayTable(true);
             setHoveringTable(true);
           }}
+          onMouseDown={() => {
+            setDisplayTable(false);
+            setHoveringTable(false);
+          }}
+          onTouchEnd={() => setHoveringTable(false)}
           onMouseLeave={() => {
             setDisplayTable(false);
             setHoveringTable(false);

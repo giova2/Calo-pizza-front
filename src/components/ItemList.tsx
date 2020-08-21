@@ -81,7 +81,7 @@ const ItemList = () => {
         <HeaderList> Menú </HeaderList>
         <hr className="accessory" />
 
-        {ItemsC === Items && <Loading display={true} customHeight="menuList" />}
+        {ItemsC === Items && <Loading show={true} customHeight="menuList" />}
 
         <span>
           <strong>Sizes:</strong>

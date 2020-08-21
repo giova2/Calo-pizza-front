@@ -12,13 +12,13 @@ const breatheSpin = keyframes`
 
 export const LoadingContainer = styled.div<{
   customHeight?: string;
-  display?: boolean | undefined;
+  show: boolean;
 }>`
   width: 100%;
   height: ${({ customHeight, theme }) =>
     customHeight ? theme.menu.height : "100%"};
   background: rgba(0, 0, 0, 0.5);
-  display: ${({ display }) => (display === true ? "flex" : "none")};
+  display: ${({ show }) => (show === true ? "flex" : "none")};
   justify-content: center;
   align-items: center;
   position: fixed;

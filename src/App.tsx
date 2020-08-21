@@ -57,7 +57,7 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
         {renderToast()}
-        <Loading display={displayLoadingLayer} />
+        <Loading show={displayLoadingLayer} />
         <Order show={display} />
         <Header />
         <ItemList />
