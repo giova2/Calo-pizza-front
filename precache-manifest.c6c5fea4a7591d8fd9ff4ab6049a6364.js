@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e59fce640985462280ffce3405619869",
+    "revision": "ed99fe634aad7c822d2130682a5cff68",
     "url": "/Calo-pizza-front/index.html"
   },
   {
