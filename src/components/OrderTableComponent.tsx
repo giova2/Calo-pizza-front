@@ -5,7 +5,7 @@ import {
   OrderItem,
   OrderItemProperty,
 } from "../styledComponents/OrderTable";
-import { OrderItemEnum, ItemTypeOrder } from "../types";
+import { OrderItemEnum, ItemTypeOrder, TypeOrderReducer } from "../types";
 import { addItem, removeItem, deleteItem, displayOrderPanel } from "../actions";
 import { AddButtonTable, RemoveButtonTable } from "../styledComponents/Item";
 import { myRound, showTwoDecimalsStrict } from "../resources";
@@ -23,14 +23,14 @@ const OrderTableComponent: FunctionComponent<TOrderTableProps> = ({
   isHovering,
 }) => {
   const state = useSelector((state: RootState) => state);
-  const orderReducer = state.orderReducer;
+  const orderReducer: TypeOrderReducer = state.orderReducer;
   const items: ItemTypeOrder[] | undefined =
     orderReducer && orderReducer.itemsOrder
       ? orderReducer.itemsOrder
       : undefined;
-  const actualCurrency = orderReducer?.actualCurrency;
-  const exchangeRate = orderReducer?.exchangeRate?.rate;
-  const total = orderReducer?.total;
+  const actualCurrency = orderReducer.actualCurrency;
+  const exchangeRate = orderReducer.exchangeRate.rate;
+  const total = orderReducer.total;
   const totalExpressedInActualCurrency =
     total && actualCurrency === USD ? myRound(total * exchangeRate) : total;
   const dispatch = useDispatch();

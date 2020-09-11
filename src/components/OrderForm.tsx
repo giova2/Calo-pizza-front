@@ -108,7 +108,7 @@ const validate = (formValues: any) => {
   }
   if (
     !formValues.email ||
-    !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(formValues.email)
+    !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(formValues.email)
   ) {
     errors.email = "E-mail format is not valid";
   }

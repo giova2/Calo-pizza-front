@@ -14,6 +14,8 @@ import {
   GET_ORDERS,
   CLEAR_ORDER,
   DISPLAY_LOADING_LAYER,
+  RECOVER_ORDER,
+  RECOVER_LAST_ORDERS,
   apiUser,
 } from "./types";
 import {
@@ -24,6 +26,7 @@ import {
   ITEM_DELETED,
   ORDER_MADE,
   ORDER_CLEARED,
+  LOCAL_STORAGE_KEYS,
 } from "../constants";
 import {
   getRates,
@@ -31,8 +34,9 @@ import {
   getItems,
   makeOrder,
   getOrders,
+  localStorageManipulation,
 } from "../resources";
-import { OrderData } from "../types";
+import { OrderData, LocalStorageActions } from "../types";
 import { store } from "../index";
 
 export const listUserOrders = async (userId: string) => {
@@ -44,6 +48,26 @@ export const listUserOrders = async (userId: string) => {
   }
 };
 
+export const recoverOrder = () => {
+  return {
+    type: RECOVER_ORDER,
+  };
+};
+export const recoverLastOrders = () => {
+  const lastOrders = localStorageManipulation(
+    LocalStorageActions.GET,
+    LOCAL_STORAGE_KEYS.lastOrders
+  );
+  const checkLastOrders =
+    lastOrders === null || lastOrders === undefined
+      ? []
+      : JSON.parse(lastOrders);
+  return {
+    type: RECOVER_LAST_ORDERS,
+    payload: checkLastOrders,
+  };
+};
+
 export const signIn = (user: apiUser) => {
   listUserOrders(user.userId);
   return {
@@ -53,6 +77,7 @@ export const signIn = (user: apiUser) => {
 };
 
 export const signOut = () => {
+  localStorage.clear();
   return {
     type: SIGN_OUT,
   };
@@ -72,7 +97,9 @@ export const getCurrencyRate = async (
   currency: string = USD
 ) => {
   try {
+    dispatch(displayLoadingLayer(true));
     const rate = await getRates(currency);
+    dispatch(displayLoadingLayer(false));
     dispatch({
       type: SET_CURRENCY,
       payload: {

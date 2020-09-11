@@ -22,7 +22,7 @@ import { RootState } from "../reducers";
 import { myRound } from "../resources";
 
 import OrderForm from "./OrderForm";
-import { ItemTypeOrder, OrderData, Status } from "../types";
+import { ItemTypeOrder, OrderData, Status, TypeOrderReducer } from "../types";
 import { USD } from "../constants";
 import OrderTableComponent from "./OrderTableComponent";
 
@@ -34,15 +34,17 @@ const Order: FunctionComponent<TOrderProps> = ({ show }) => {
   const [animate, setAnimate] = React.useState(show);
   const OrderContainer = React.useRef(null);
   const state = useSelector((state: RootState) => state);
-  const orderReducer = state.orderReducer;
+  const orderReducer: TypeOrderReducer = state.orderReducer;
   const auth = state.auth;
   const items: ItemTypeOrder[] | undefined =
     orderReducer && orderReducer.itemsOrder
       ? orderReducer.itemsOrder
       : undefined;
-  const actualCurrency = orderReducer?.actualCurrency;
-  const exchangeRate = orderReducer?.exchangeRate?.rate;
-  const total = orderReducer?.total;
+  const actualCurrency = orderReducer.actualCurrency;
+  const exchangeRate = orderReducer.exchangeRate?.rate
+    ? orderReducer.exchangeRate.rate
+    : -1;
+  const total = orderReducer.total;
   const totalExpressedInActualCurrency =
     total && actualCurrency === USD ? myRound(total * exchangeRate) : total;
   const dispatch = useDispatch();

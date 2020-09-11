@@ -9,23 +9,32 @@ import {
   ClosePanel,
   Close,
 } from "../styledComponents/HeaderItemFirst";
-import { OrderData } from "../types";
+import { OrderData, TypeOrderReducer, TypeAuthReducer } from "../types";
 import pizzaSVG from "../assets/images/pizza.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../reducers";
-import { displayPrevOrdersAction } from "../actions";
+import { displayPrevOrdersAction, recoverLastOrders } from "../actions";
 import PrevOrdersItemsList from "./PrevOrdersItemsList";
 import { formatDate } from "../resources";
-
+type ReducerReduced = {
+  auth: TypeAuthReducer;
+  orderReducer: TypeOrderReducer;
+};
 export default function PrevOrders() {
-  const orderReducer = useSelector((state: RootState) => state.orderReducer);
-  const PrevOrdersLayer = React.useRef(null);
-  const displayPrevOrders = orderReducer
-    ? orderReducer.displayPrevOrders
-    : false;
-  const orders = orderReducer ? orderReducer.orders : [];
-
+  const { orderReducer, auth }: ReducerReduced = useSelector(
+    (state: RootState) => state
+  );
   const dispatch = useDispatch();
+  const PrevOrdersLayer = React.useRef(null);
+  const displayPrevOrders = orderReducer.displayPrevOrders;
+  const orders = orderReducer.orders;
+
+  React.useEffect(() => {
+    if (orders.length === 0 && !auth.isSignedIn) {
+      dispatch(recoverLastOrders());
+    }
+  }, []);
+
   const renderPanel = () => {
     if (displayPrevOrders) {
       return (

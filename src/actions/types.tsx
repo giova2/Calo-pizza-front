@@ -13,6 +13,8 @@ export const SIGN_OUT = "SIGN_OUT";
 export const GET_ORDERS = "GET_ORDERS";
 export const CLEAR_ORDER = "CLEAR_ORDER";
 export const DISPLAY_LOADING_LAYER = "DISPLAY_LOADING_LAYER";
+export const RECOVER_ORDER = "RECOVER_ORDER";
+export const RECOVER_LAST_ORDERS = "RECOVER_LAST_ORDERS";
 
 export type reduxAction = {
   type: string;

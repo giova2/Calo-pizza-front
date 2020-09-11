@@ -14,7 +14,7 @@ import { Transition } from "react-transition-group";
 import { addItem, removeItem } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../reducers";
-import { Sizes } from "../types";
+import { Sizes, TypeOrderReducer } from "../types";
 import { USD } from "../constants";
 import { myRound, showTwoDecimalsStrict } from "../resources";
 
@@ -34,9 +34,11 @@ const Item = ({
   const [animate, setAnimate] = React.useState(false);
   const [time, setTime] = React.useState(new Date());
   const dispatch = useDispatch();
-  const orderReducer = useSelector((state: RootState) => state.orderReducer);
-  const actualCurrency = orderReducer?.actualCurrency;
-  const exchangeRate = orderReducer?.exchangeRate
+  const orderReducer: TypeOrderReducer = useSelector(
+    (state: RootState) => state.orderReducer
+  );
+  const actualCurrency = orderReducer.actualCurrency;
+  const exchangeRate = orderReducer.exchangeRate
     ? orderReducer.exchangeRate.rate
     : 0;
 

@@ -4,7 +4,7 @@ import authReducer from "./authReducer";
 import { reducer as formReducer } from "redux-form";
 
 export const rootReducer = combineReducers({
-  orderReducer,
+  orderReducer: orderReducer,
   auth: authReducer,
   form: formReducer,
 });

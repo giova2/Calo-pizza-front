@@ -21,6 +21,7 @@ import EuroSVGColored from "../assets/images/euro_colored.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../reducers";
 import { displayOrderPanel, setActualCurrency } from "../actions";
+import { TypeOrderReducer } from "../types";
 import { USD, EUR } from "../constants";
 import PrevOrders from "./PrevOrders";
 import OrderTableComponent from "./OrderTableComponent";
@@ -28,18 +29,17 @@ import OrderTableComponent from "./OrderTableComponent";
 const Header = () => {
   const [displayTable, setDisplayTable] = React.useState(false);
   const [hoveringTable, setHoveringTable] = React.useState(false);
-  const orderReducer = useSelector((state: RootState) => state.orderReducer);
-  const itemsOrder = orderReducer?.itemsOrder;
-  const actualCurrency = orderReducer?.actualCurrency;
+  const orderReducer: TypeOrderReducer = useSelector(
+    (state: RootState) => state.orderReducer
+  );
+  const itemsOrder = orderReducer.itemsOrder;
+  const actualCurrency = orderReducer.actualCurrency;
   const dispatch = useDispatch();
-  const quantity =
-    itemsOrder && itemsOrder.length > 0
-      ? itemsOrder
-          ?.map((item) => {
-            return item.quantity;
-          })
-          .reduce((total, num) => total + num)
-      : 0;
+  const quantity = itemsOrder
+    .map((item) => {
+      return item.quantity;
+    })
+    .reduce((total, num) => total + num, 0);
 
   return (
     <HeaderContainer>
@@ -65,7 +65,7 @@ const Header = () => {
           }}
         >
           <ShoppingCartImg
-            animate={orderReducer?.display !== true}
+            animate={orderReducer.display !== true}
             visible={itemsOrder && itemsOrder.length > 0}
             src={ShoppingCartSVG}
             onClick={(e) => dispatch(displayOrderPanel(true))}

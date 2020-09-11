@@ -1,4 +1,10 @@
-import { ItemType, OrderData, Currency, Sizes } from "../types";
+import {
+  ItemType,
+  OrderData,
+  Currency,
+  Sizes,
+  LocalStorageActions,
+} from "../types";
 import axios from "axios";
 
 export const createNewApiUser = async (userGapiObject: any) => {
@@ -21,17 +27,7 @@ export const getOrders = async (userId: string) => {
     process.env.REACT_APP_API_URL && process.env.REACT_APP_API_ORDERS
       ? process.env.REACT_APP_API_URL + process.env.REACT_APP_API_ORDERS
       : "http://pizza-task.test/api/orders";
-  try {
-    const response = await axios.get(`${url}/${userId}`);
-    if (response.data) {
-      return response.data;
-    }
-  } catch (error) {
-    console.log(
-      "An error occur while trying to get the current exchange: ",
-      error
-    );
-  }
+  return await makePlainGet(`${url}/${userId}`);
 };
 
 export const makeOrder = async (data: OrderData, userId?: string) => {
@@ -70,9 +66,13 @@ export const getItems = async () => {
     process.env.REACT_APP_API_URL && process.env.REACT_APP_API_ITEMS
       ? process.env.REACT_APP_API_URL + process.env.REACT_APP_API_ITEMS
       : "http://pizza-task.test/api/items";
+  return await makePlainGet(url);
+};
+
+const makePlainGet = async (url: string) => {
   try {
     const response = await axios.get(url);
-    if (response.data && response.data) {
+    if (response.data) {
       return response.data;
     }
   } catch (error) {
@@ -116,6 +116,18 @@ export const formatDate = (d: Date) => {
   )}/${date.getFullYear()} ${zeroAtLeft(date.getHours())}:${zeroAtLeft(
     date.getMinutes()
   )}`;
+};
+
+export const localStorageManipulation = (
+  action: LocalStorageActions,
+  key: string,
+  val?: string
+) => {
+  return action === LocalStorageActions.GET
+    ? localStorage.getItem(key)
+    : val
+    ? localStorage.setItem(key, val)
+    : null;
 };
 
 export const Items: ItemType[] = [

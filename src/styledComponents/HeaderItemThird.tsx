@@ -52,22 +52,22 @@ export const GoogleIcon = styled.div<{ before: string }>`
   background-image: url(${GoogleSVG});
   background-position: center;
   background-size: cover;
-  position:relative;
-  &::before{
+  position: relative;
+  &::before {
     ${breakpoint("mobile")`
         color: ${({ theme }) => theme.colors.main};
         left: 50%;
         top: 100%;
         transform: translateX(-50%);
       `}
-      ${breakpoint("tablet")`
+    ${breakpoint("tablet")`
         color: ${({ theme }) => theme.colors.secondary};
         left: 0;
         top: 15%;
         transform: translateX(-105%);
       `}
     content: "${({ before }) => before}";
-    
+
     position: absolute;
     font-weight: bold;
   }

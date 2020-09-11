@@ -3,6 +3,11 @@ export enum Currency {
   EUR = "EUR",
 }
 
+export enum LocalStorageActions {
+  GET = "GET",
+  SET = "SET",
+}
+
 export enum Sizes {
   small = "small",
   medium = "medium",
@@ -53,3 +58,25 @@ export enum OrderItemEnum {
   fees = "fees",
   total = "total",
 }
+
+export type TypeOrderReducer = {
+  display: boolean;
+  items: ItemType[];
+  itemsOrder: ItemTypeOrder[];
+  actualCurrency: Currency;
+  exchangeRate: ExchangeRate;
+  total: number;
+  notification: {
+    type: string | null;
+    message: string | null;
+  };
+  orders: OrderData[];
+  displayPrevOrders: boolean;
+  displayLoadingLayer: boolean;
+};
+
+export type TypeAuthReducer = {
+  isSignedIn: boolean | null;
+  userId: string | null;
+  email: string | null;
+};

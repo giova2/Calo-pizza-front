@@ -1,9 +1,6 @@
 import { SIGN_IN, SIGN_OUT, reduxAction } from "../actions/types";
-const INITIAL_STATE: {
-  isSignedIn: boolean | null;
-  userId: string | null;
-  email: string | null;
-} = {
+import { TypeAuthReducer } from "../types";
+const INITIAL_STATE: TypeAuthReducer = {
   isSignedIn: null,
   userId: null,
   email: null,

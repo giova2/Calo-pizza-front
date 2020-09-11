@@ -12,32 +12,32 @@ import {
   CLEAR_ORDER,
   DISPLAY_PREV_ORDERS,
   DISPLAY_LOADING_LAYER,
+  RECOVER_ORDER,
+  RECOVER_LAST_ORDERS,
   reduxAction,
 } from "../actions/types";
-import { Items } from "../resources";
-import { ItemType, ItemTypeOrder, ExchangeRate, OrderData } from "../types";
-import { EUR, DELIVERY_FEE } from "../constants";
+import { Items, localStorageManipulation } from "../resources";
+import {
+  ItemType,
+  ItemTypeOrder,
+  TypeOrderReducer,
+  LocalStorageActions,
+  Currency,
+} from "../types";
+import { DELIVERY_FEE, LOCAL_STORAGE_KEYS } from "../constants";
 
-const INITIAL_STATE: {
-  display: boolean;
-  items: ItemType[];
-  itemsOrder: ItemTypeOrder[];
-  actualCurrency: string;
-  exchangeRate: ExchangeRate | null;
-  total: number;
-  notification: {
-    type: string | null;
-    message: string | null;
-  };
-  orders: OrderData[];
-  displayPrevOrders: boolean;
-  displayLoadingLayer: boolean;
-} = {
+const actCurr = localStorageManipulation(
+  LocalStorageActions.GET,
+  LOCAL_STORAGE_KEYS.currentCurrency
+);
+
+const INITIAL_STATE: TypeOrderReducer = {
   display: false,
   items: Items,
   itemsOrder: [],
-  actualCurrency: EUR,
-  exchangeRate: null,
+  actualCurrency:
+    actCurr === null || actCurr === undefined ? Currency.EUR : Currency.USD,
+  exchangeRate: { currency: Currency.EUR, rate: 1 },
   total: DELIVERY_FEE,
   notification: {
     type: null,
@@ -56,6 +56,9 @@ export default (state = INITIAL_STATE, action: reduxAction) => {
   switch (action.type) {
     case ADD_ITEM:
       if (tmpItem) {
+        let returnItemsOrder: ItemTypeOrder[] = [];
+        let newState = {};
+        let newTotal = 0;
         const newItems: ItemTypeOrder[] = [];
         itemsOrder.forEach((obj) => newItems.push({ ...obj }));
         const existed_item: ItemTypeOrder | undefined = newItems.find(
@@ -63,23 +66,41 @@ export default (state = INITIAL_STATE, action: reduxAction) => {
         );
         if (existed_item) {
           existed_item.quantity += 1;
-          return {
+          returnItemsOrder = newItems;
+          newTotal = state.total + existed_item.price;
+          newState = {
             ...state,
-            itemsOrder: newItems,
-            total: state.total + existed_item.price,
+            itemsOrder: returnItemsOrder,
+            total: newTotal,
           };
         } else {
           const newItem: ItemTypeOrder = { ...tmpItem, quantity: 1 };
-          return {
+          returnItemsOrder = [...itemsOrder, newItem];
+          newTotal = state.total + newItem.price;
+          newState = {
             ...state,
-            itemsOrder: [...itemsOrder, newItem],
-            total: state.total + newItem.price,
+            itemsOrder: returnItemsOrder,
+            total: newTotal,
           };
         }
+        localStorageManipulation(
+          LocalStorageActions.SET,
+          LOCAL_STORAGE_KEYS.currentOrderItems,
+          JSON.stringify(returnItemsOrder)
+        );
+        localStorageManipulation(
+          LocalStorageActions.SET,
+          LOCAL_STORAGE_KEYS.currentTotal,
+          newTotal.toString()
+        );
+        return newState;
       }
       break;
     case REMOVE_ITEM:
       if (tmpItem) {
+        let returnItemsOrder: ItemTypeOrder[] = [];
+        let newState = {};
+        let newTotal = 0;
         const newItems: ItemTypeOrder[] = [];
         itemsOrder.forEach((obj) => newItems.push({ ...obj }));
         const existed_item: ItemTypeOrder | undefined = newItems.find(
@@ -91,22 +112,41 @@ export default (state = INITIAL_STATE, action: reduxAction) => {
             const newItemsWithoutItem = [...newItems].filter(
               (elem: ItemTypeOrder) => elem.id !== existed_item.id
             );
-            return {
+            returnItemsOrder = newItemsWithoutItem;
+            newTotal = state.total - existed_item.price;
+            newState = {
               ...state,
-              itemsOrder: newItemsWithoutItem,
-              total: state.total - existed_item.price,
+              itemsOrder: returnItemsOrder,
+              total: newTotal,
+            };
+          } else {
+            returnItemsOrder = newItems;
+            newTotal = state.total - existed_item.price;
+            newState = {
+              ...state,
+              itemsOrder: newItems,
+              total: newTotal,
             };
           }
-          return {
-            ...state,
-            itemsOrder: newItems,
-            total: state.total - existed_item.price,
-          };
+          localStorageManipulation(
+            LocalStorageActions.SET,
+            LOCAL_STORAGE_KEYS.currentOrderItems,
+            JSON.stringify(returnItemsOrder)
+          );
+          localStorageManipulation(
+            LocalStorageActions.SET,
+            LOCAL_STORAGE_KEYS.currentTotal,
+            newTotal.toString()
+          );
+          return newState;
         }
       }
       break;
     case DELETE_ITEM:
       if (tmpItem) {
+        let returnItemsOrder: ItemTypeOrder[] = [];
+        let newState = {};
+        let newTotal = 0;
         const newItems: ItemTypeOrder[] = [];
         itemsOrder.forEach((obj) => newItems.push({ ...obj }));
         const existed_item: ItemTypeOrder | undefined = newItems.find(
@@ -116,18 +156,36 @@ export default (state = INITIAL_STATE, action: reduxAction) => {
           const newItemsWithoutItem = [...newItems].filter(
             (elem: ItemTypeOrder) => elem.id !== existed_item.id
           );
-          return {
+          returnItemsOrder = newItemsWithoutItem;
+          newTotal = state.total - existed_item.price * existed_item.quantity;
+          newState = {
             ...state,
             itemsOrder: newItemsWithoutItem,
-            total: state.total - existed_item.price * existed_item.quantity,
+            total: newTotal,
           };
         }
+        localStorageManipulation(
+          LocalStorageActions.SET,
+          LOCAL_STORAGE_KEYS.currentOrderItems,
+          JSON.stringify(returnItemsOrder)
+        );
+        localStorageManipulation(
+          LocalStorageActions.SET,
+          LOCAL_STORAGE_KEYS.currentTotal,
+          newTotal.toString()
+        );
+        return newState;
       }
       break;
     case SET_CURRENCY:
       const { currency, rate } = action.payload;
       return { ...state, exchangeRate: { currency, rate } };
     case SET_ACTUAL_CURRENCY:
+      localStorageManipulation(
+        LocalStorageActions.SET,
+        LOCAL_STORAGE_KEYS.currentCurrency,
+        action.payload
+      );
       return { ...state, actualCurrency: action.payload };
     case DISPLAY_ORDER_PANEL:
       return { ...state, display: action.payload };
@@ -143,29 +201,62 @@ export default (state = INITIAL_STATE, action: reduxAction) => {
         },
       };
     case MAKE_ORDER:
+      localStorage.removeItem(LOCAL_STORAGE_KEYS.currentOrderItems);
+      localStorage.removeItem(LOCAL_STORAGE_KEYS.currentTotal);
+      const newOrder = { ...action.payload, items: state.itemsOrder };
+      const newOrders = [...state.orders, newOrder];
+      localStorageManipulation(
+        LocalStorageActions.SET,
+        LOCAL_STORAGE_KEYS.lastOrders,
+        JSON.stringify(newOrders)
+      );
       return {
         ...state,
-        orders: [
-          ...state.orders,
-          { ...action.payload, items: state.itemsOrder },
-        ],
+        orders: newOrders,
         itemsOrder: [],
         total: DELIVERY_FEE,
       };
     case GET_ORDERS:
+      localStorage.removeItem(LOCAL_STORAGE_KEYS.lastOrders);
       const itemOrders = action.payload.map(({ order, items }: any) => {
         return { ...order, items };
       });
-
+      const getOrderslastOrders = [...state.orders, ...itemOrders];
       return {
         ...state,
-        orders: [...state.orders, ...itemOrders],
+        orders: getOrderslastOrders,
       };
+    case RECOVER_ORDER:
+      const orderItems = localStorageManipulation(
+        LocalStorageActions.GET,
+        LOCAL_STORAGE_KEYS.currentOrderItems
+      );
+      const totalRecovered = localStorageManipulation(
+        LocalStorageActions.GET,
+        LOCAL_STORAGE_KEYS.currentTotal
+      );
+      const cleanOrderItems =
+        orderItems === null || orderItems === undefined
+          ? []
+          : JSON.parse(orderItems);
+      const cleanTotalRecovered =
+        totalRecovered === null || totalRecovered === undefined
+          ? 0
+          : parseFloat(totalRecovered);
+      return {
+        ...state,
+        itemsOrder: cleanOrderItems,
+        total: cleanTotalRecovered,
+      };
+    case RECOVER_LAST_ORDERS:
+      return { ...state, orders: action.payload };
     case DISPLAY_PREV_ORDERS:
       return { ...state, displayPrevOrders: action.payload };
     case DISPLAY_LOADING_LAYER:
       return { ...state, displayLoadingLayer: action.payload };
     case CLEAR_ORDER:
+      localStorage.removeItem(LOCAL_STORAGE_KEYS.currentOrderItems);
+      localStorage.removeItem(LOCAL_STORAGE_KEYS.currentTotal);
       return { ...state, itemsOrder: [] };
     default:
       return state;

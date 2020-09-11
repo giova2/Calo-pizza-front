@@ -8,18 +8,26 @@ import ItemList from "./components/ItemList";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "./reducers";
 import { Items } from "./resources";
-import { getCurrencyRate, getItemsAction, notificationAction } from "./actions";
+import {
+  getCurrencyRate,
+  getItemsAction,
+  notificationAction,
+  recoverOrder,
+} from "./actions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loading from "./components/Loading";
+import { TypeOrderReducer, Currency } from "./types";
 
 import "./App.css";
 
 function App() {
-  const orderReducer = useSelector((state: RootState) => state.orderReducer);
-  const display: boolean = orderReducer?.display;
-  const displayLoadingLayer = orderReducer?.displayLoadingLayer;
-  const notification = orderReducer?.notification;
+  const orderReducer: TypeOrderReducer = useSelector(
+    (state: RootState) => state.orderReducer
+  );
+  const display: boolean = orderReducer.display ? orderReducer.display : false;
+  const displayLoadingLayer = orderReducer.displayLoadingLayer;
+  const notification = orderReducer.notification;
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -28,16 +36,22 @@ function App() {
       notification.type === "ok" && toast.success(notification.message);
       notification.type === "warn" && toast.warn(notification.message);
     }
-    if (!orderReducer?.exchangeRate) {
+    if (orderReducer.itemsOrder.length === 0) {
+      dispatch(recoverOrder());
+    }
+    if (
+      orderReducer.actualCurrency !== Currency.EUR &&
+      orderReducer.exchangeRate.currency === Currency.EUR
+    ) {
       getCurrencyRate(dispatch);
     }
-    if (orderReducer?.items.length === 0 || orderReducer?.items === Items) {
+    if (orderReducer.items.length === 0 || orderReducer.items === Items) {
       getItemsAction(dispatch);
     }
     return () => {
       dispatch(notificationAction(null, null));
     };
-  }, [notification?.message]);
+  }, [notification?.message, orderReducer.actualCurrency]);
 
   const renderToast = () => {
     return (
