@@ -44,7 +44,9 @@ export const listUserOrders = async (userId: string) => {
     const response = await getOrders(userId);
     store.dispatch({ type: GET_ORDERS, payload: response });
   } catch (error) {
-    store.dispatch(notificationAction("error", error));
+    if(typeof error === 'string'){
+      store.dispatch(notificationAction("error", error as string));
+    }
   }
 };
 
@@ -53,6 +55,7 @@ export const recoverOrder = () => {
     type: RECOVER_ORDER,
   };
 };
+
 export const recoverLastOrders = () => {
   const lastOrders = localStorageManipulation(
     LocalStorageActions.GET,
@@ -88,7 +91,9 @@ export const getItemsAction = async (dispatch: any) => {
     const items = await getItems();
     dispatch({ type: GET_ITEMS, payload: items });
   } catch (error) {
-    dispatch(notificationAction("error", error));
+    if(typeof error === 'string'){
+      dispatch(notificationAction("error", error));
+    }
   }
 };
 
@@ -109,7 +114,9 @@ export const getCurrencyRate = async (
       },
     });
   } catch (error) {
-    dispatch(notificationAction("error", error));
+    if(typeof error === 'string'){
+      dispatch(notificationAction("error", error));
+    }
   }
 };
 
@@ -136,7 +143,9 @@ export const makeOrderAction = async (
       dispatch({ type: MAKE_ORDER, payload: response.data.success });
     }
   } catch (error) {
-    dispatch(notificationAction("error", error));
+    if(typeof error === 'string'){
+      dispatch(notificationAction("error", error));
+    }
   }
 };
 

@@ -15,6 +15,13 @@ import Loading from "./Loading";
 import { Items as ItemsC } from "../resources";
 import { RootState } from "../reducers";
 
+const getCountOnSize = (items: ItemType[], size: Sizes) =>
+  items && items.length > 0
+      ? items.map((item: ItemType) => {
+          return item.size === size ? 1 : 0;
+        }).reduce((total: any, num: any) => total + num)
+      : 0;
+
 const ItemList = () => {
   const [filterSize, setFilterSize] = React.useState(Object.values(Sizes)[2]);
   const [filterName, setFilterName] = React.useState("");
@@ -22,28 +29,15 @@ const ItemList = () => {
     (state: RootState) => state.orderReducer
   );
   const Items = orderReducer.items;
-  const numSizeSmall =
-    Items && Items.length > 0
-      ? Items.map((item: ItemType) => {
-          return item.size === Object.values(Sizes)[0] ? 1 : 0;
-        }).reduce((total: any, num: any) => total + num)
-      : 0;
-  const numSizeMedium =
-    Items && Items.length > 0
-      ? Items.map((item: ItemType) => {
-          return item.size === Object.values(Sizes)[1] ? 1 : 0;
-        }).reduce((total: any, num: any) => total + num)
-      : 0;
-  const numSizeLarge =
-    Items && Items.length > 0
-      ? Items.map((item: ItemType) => {
-          return item.size === Object.values(Sizes)[2] ? 1 : 0;
-        }).reduce((total: any, num: any) => total + num)
-      : 0;
+  const numSizeSmall = getCountOnSize(Items, Sizes.small)
+  const numSizeMedium = getCountOnSize(Items, Sizes.medium)
+  const numSizeLarge = getCountOnSize(Items, Sizes.large)
+
   const numSizes = { small: 0, medium: 0, large: 0 };
   numSizes[Sizes.small] = numSizeSmall;
   numSizes[Sizes.medium] = numSizeMedium;
   numSizes[Sizes.large] = numSizeLarge;
+  
   React.useEffect(() => {
     Object.values(Sizes).forEach((val) => {
       if (numSizes[val] > 0) {
@@ -53,7 +47,7 @@ const ItemList = () => {
   }, [numSizeSmall, numSizeMedium, numSizeLarge]);
 
   const renderItems = () => {
-    return Items.map((i: ItemType) => {
+    return Items?.map((i: ItemType) => {
       const itemOrder: ItemTypeOrder | undefined = orderReducer.itemsOrder.find(
         (item: ItemTypeOrder) => item.id === i.id
       );

@@ -23,19 +23,14 @@ export const createNewApiUser = async (userGapiObject: any) => {
 };
 
 export const getOrders = async (userId: string) => {
-  const url =
-    process.env.REACT_APP_API_URL && process.env.REACT_APP_API_ORDERS
-      ? process.env.REACT_APP_API_URL + process.env.REACT_APP_API_ORDERS
-      : "http://pizza-task.test/api/orders";
+  const url = `${process.env.REACT_APP_API_URL}${process.env.REACT_APP_API_ORDERS}`;
+      
   return await makePlainGet(`${url}/${userId}`);
 };
 
 export const makeOrder = async (data: OrderData, userId?: string) => {
   const dataSet = userId ? { ...data, user_id: userId } : data;
-  const url =
-    process.env.REACT_APP_API_URL && process.env.REACT_APP_API_ORDERS
-      ? process.env.REACT_APP_API_URL + process.env.REACT_APP_API_ORDERS
-      : "http://pizza-task.test/api/orders";
+  const url = `${process.env.REACT_APP_API_URL}${process.env.REACT_APP_API_ORDERS}`;
   const response = await axios.post(`${url}`, dataSet);
   return response;
 };
@@ -44,11 +39,18 @@ export const makeOrder = async (data: OrderData, userId?: string) => {
  * Normally, the base would be EUR and the rate we are looking for is USD
  */
 export const getRates = async (currency: string) => {
-  const url = process.env.REACT_APP_API_CURRENCY
-    ? process.env.REACT_APP_API_CURRENCY
-    : "https://api.exchangeratesapi.io/latest";
+  const url = process.env.REACT_APP_API_CURRENCY!
   try {
-    const response = await axios.get(url);
+    
+    const myHeaders = {
+      apikey: process.env.REACT_APP_API_CURRENCY_KEY!
+    }
+    
+    const requestOptions = {
+      headers: myHeaders
+    };
+
+    const response = await axios.get(`${url}?symbols=USD,EUR&base=EUR`, requestOptions);
     if (response.data && response.data.rates) {
       return response.data.rates[currency];
     }
@@ -62,10 +64,7 @@ export const getRates = async (currency: string) => {
 };
 
 export const getItems = async () => {
-  const url =
-    process.env.REACT_APP_API_URL && process.env.REACT_APP_API_ITEMS
-      ? process.env.REACT_APP_API_URL + process.env.REACT_APP_API_ITEMS
-      : "http://pizza-task.test/api/items";
+  const url = `${process.env.REACT_APP_API_URL}${process.env.REACT_APP_API_ITEMS}`;
   return await makePlainGet(url);
 };
 
