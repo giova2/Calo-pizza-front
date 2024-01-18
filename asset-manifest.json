@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/Calo-pizza-front/static/css/main.8d1d8820.chunk.css",
-    "main.js": "/Calo-pizza-front/static/js/main.da73c947.chunk.js",
-    "main.js.map": "/Calo-pizza-front/static/js/main.da73c947.chunk.js.map",
+    "main.js": "/Calo-pizza-front/static/js/main.2300c45a.chunk.js",
+    "main.js.map": "/Calo-pizza-front/static/js/main.2300c45a.chunk.js.map",
     "runtime-main.js": "/Calo-pizza-front/static/js/runtime-main.c9a49ffe.js",
     "runtime-main.js.map": "/Calo-pizza-front/static/js/runtime-main.c9a49ffe.js.map",
     "static/css/2.d34346ea.chunk.css": "/Calo-pizza-front/static/css/2.d34346ea.chunk.css",
-    "static/js/2.d0a4e3e4.chunk.js": "/Calo-pizza-front/static/js/2.d0a4e3e4.chunk.js",
-    "static/js/2.d0a4e3e4.chunk.js.map": "/Calo-pizza-front/static/js/2.d0a4e3e4.chunk.js.map",
+    "static/js/2.1dc16129.chunk.js": "/Calo-pizza-front/static/js/2.1dc16129.chunk.js",
+    "static/js/2.1dc16129.chunk.js.map": "/Calo-pizza-front/static/js/2.1dc16129.chunk.js.map",
     "index.html": "/Calo-pizza-front/index.html",
-    "precache-manifest.173f8fde2e13ee739c962d59697a9eb5.js": "/Calo-pizza-front/precache-manifest.173f8fde2e13ee739c962d59697a9eb5.js",
+    "precache-manifest.310de6ebaad3b43ff2cebf1d59ef436c.js": "/Calo-pizza-front/precache-manifest.310de6ebaad3b43ff2cebf1d59ef436c.js",
     "service-worker.js": "/Calo-pizza-front/service-worker.js",
     "static/css/2.d34346ea.chunk.css.map": "/Calo-pizza-front/static/css/2.d34346ea.chunk.css.map",
     "static/css/main.8d1d8820.chunk.css.map": "/Calo-pizza-front/static/css/main.8d1d8820.chunk.css.map",
-    "static/js/2.d0a4e3e4.chunk.js.LICENSE.txt": "/Calo-pizza-front/static/js/2.d0a4e3e4.chunk.js.LICENSE.txt",
+    "static/js/2.1dc16129.chunk.js.LICENSE.txt": "/Calo-pizza-front/static/js/2.1dc16129.chunk.js.LICENSE.txt",
     "static/media/index.css": "/Calo-pizza-front/static/media/panpizza.44866333.woff",
     "static/media/add_circle.svg": "/Calo-pizza-front/static/media/add_circle.3a9158c0.svg",
     "static/media/add_circle_colored.svg": "/Calo-pizza-front/static/media/add_circle_colored.94a42fcd.svg",
@@ -34,8 +34,8 @@
   "entrypoints": [
     "static/js/runtime-main.c9a49ffe.js",
     "static/css/2.d34346ea.chunk.css",
-    "static/js/2.d0a4e3e4.chunk.js",
+    "static/js/2.1dc16129.chunk.js",
     "static/css/main.8d1d8820.chunk.css",
-    "static/js/main.da73c947.chunk.js"
+    "static/js/main.2300c45a.chunk.js"
   ]
 }
