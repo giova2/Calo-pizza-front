@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/Calo-pizza-front/precache-manifest.c6c5fea4a7591d8fd9ff4ab6049a6364.js"
+  "/Calo-pizza-front/precache-manifest.173f8fde2e13ee739c962d59697a9eb5.js"
 );
 
 self.addEventListener('message', (event) => {
