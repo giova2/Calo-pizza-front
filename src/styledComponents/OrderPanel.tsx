@@ -121,11 +121,9 @@ export const NoItemsOrder = styled.div`
 
 export const ErrorMsg = styled.span<{ severity?: string }>`
   ${breakpoint("mobile")`
-    padding: 0.25rem;
     font-size: 0.8rem;
   `}
   ${breakpoint("tablet")`
-    padding: 0.5rem;
     font-size: 1rem;
   `}
   background: ${({ theme, severity }) =>

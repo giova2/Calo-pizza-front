@@ -64,6 +64,7 @@ export default (state = INITIAL_STATE, action: reduxAction) => {
         const existed_item: ItemTypeOrder | undefined = newItems.find(
           (item) => action.payload === item.id
         );
+        
         if (existed_item) {
           existed_item.quantity += 1;
           returnItemsOrder = newItems;
@@ -241,7 +242,7 @@ export default (state = INITIAL_STATE, action: reduxAction) => {
           : JSON.parse(orderItems);
       const cleanTotalRecovered =
         totalRecovered === null || totalRecovered === undefined
-          ? 0
+          ? INITIAL_STATE.total
           : parseFloat(totalRecovered);
       return {
         ...state,

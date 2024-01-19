@@ -19,6 +19,7 @@ export const OrderTable = styled.table`
   font-size: ${({ theme }) => theme.fontSize.secondary};
   color: ${({ theme }) => theme.colors.main};
   border-collapse: collapse;
+  border: 1px solid black;
 `;
 export const OrderTableBody = styled.tbody``;
 

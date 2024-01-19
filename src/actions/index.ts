@@ -36,7 +36,7 @@ import {
   getOrders,
   localStorageManipulation,
 } from "../resources";
-import { OrderData, LocalStorageActions } from "../types";
+import { OrderData, LocalStorageActions, ItemType, ItemTypeApiResponse } from "../types";
 import { store } from "../index";
 
 export const listUserOrders = async (userId: string) => {
@@ -88,8 +88,9 @@ export const signOut = () => {
 
 export const getItemsAction = async (dispatch: any) => {
   try {
-    const items = await getItems();
-    dispatch({ type: GET_ITEMS, payload: items });
+    const items: ItemTypeApiResponse[] = await getItems();
+    const parsedItems = items.map((item: ItemTypeApiResponse) => ({...item, price: parseFloat(item.price)}))
+    dispatch({ type: GET_ITEMS, payload: parsedItems });
   } catch (error) {
     if(typeof error === 'string'){
       dispatch(notificationAction("error", error));

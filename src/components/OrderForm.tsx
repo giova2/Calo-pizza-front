@@ -15,12 +15,12 @@ const renderError = ({ alertClass, touched, warning, error }: any) => (
   <div>
     {touched &&
       ((error && (
-        <div style={{ margin: "0.5rem" }}>
+        <div style={{ margin: "0.25rem" }}>
           <ErrorMsg>{error}</ErrorMsg>
         </div>
       )) ||
         (warning && (
-          <div style={{ margin: "0.5rem" }}>
+          <div style={{ margin: "0.25rem" }}>
             <ErrorMsg severity="warning">{warning}</ErrorMsg>
           </div>
         )))}

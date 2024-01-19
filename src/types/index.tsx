@@ -30,6 +30,16 @@ export type ItemType = {
   currency: Currency;
 };
 
+export type ItemTypeApiResponse = {
+  id: number;
+  name: string;
+  ingredients: string;
+  size: Sizes;
+  image_url: string;
+  price: string;
+  currency: Currency;
+};
+
 export type ItemTypeOrder = ItemType & {
   quantity: number;
 };

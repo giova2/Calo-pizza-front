@@ -5,7 +5,7 @@ import {
   OrderItem,
   OrderItemProperty,
 } from "../styledComponents/OrderTable";
-import { OrderItemEnum, ItemTypeOrder, TypeOrderReducer } from "../types";
+import { OrderItemEnum, ItemTypeOrder, TypeOrderReducer, Currency } from "../types";
 import { addItem, removeItem, deleteItem, displayOrderPanel } from "../actions";
 import { AddButtonTable, RemoveButtonTable } from "../styledComponents/Item";
 import { myRound, showTwoDecimalsStrict } from "../resources";
@@ -17,6 +17,11 @@ type TOrderTableProps = {
   display?: boolean;
   isHovering?: boolean;
 };
+
+const parseCost = (actualCurrency: Currency, num: number) => (
+  `${actualCurrency === USD ? "$" : "€"
+  }${showTwoDecimalsStrict(myRound(num))}`
+)
 
 const OrderTableComponent: FunctionComponent<TOrderTableProps> = ({
   display,
@@ -114,20 +119,14 @@ const OrderTableComponent: FunctionComponent<TOrderTableProps> = ({
             <OrderItemProperty>Subtotal</OrderItemProperty>
             <OrderItemProperty></OrderItemProperty>
             <OrderItemProperty></OrderItemProperty>
-            <OrderItemProperty>{`${
-              actualCurrency === USD ? "$" : "€"
-            }${showTwoDecimalsStrict(myRound(subtotal))}`}</OrderItemProperty>
+            <OrderItemProperty>{parseCost(actualCurrency, subtotal)}</OrderItemProperty>
             <OrderItemProperty></OrderItemProperty>
           </OrderItem>
           <OrderItem type={OrderItemEnum.fees}>
             <OrderItemProperty>Delivery fee</OrderItemProperty>
             <OrderItemProperty></OrderItemProperty>
             <OrderItemProperty></OrderItemProperty>
-            <OrderItemProperty>{`${
-              actualCurrency === USD
-                ? "$" + showTwoDecimalsStrict(myRound(10 * exchangeRate))
-                : "€10"
-            }`}</OrderItemProperty>
+            <OrderItemProperty>{parseCost(actualCurrency, myRound(10 * exchangeRate))}</OrderItemProperty>
             <OrderItemProperty></OrderItemProperty>
           </OrderItem>
           <OrderItem type={OrderItemEnum.total}>
@@ -136,11 +135,7 @@ const OrderTableComponent: FunctionComponent<TOrderTableProps> = ({
             </OrderItemProperty>
             <OrderItemProperty type={OrderItemEnum.total}></OrderItemProperty>
             <OrderItemProperty type={OrderItemEnum.total}></OrderItemProperty>
-            <OrderItemProperty type={OrderItemEnum.total}>{`${
-              actualCurrency === USD ? "$" : "€"
-            }${showTwoDecimalsStrict(
-              totalExpressedInActualCurrency
-            )}`}</OrderItemProperty>
+            <OrderItemProperty type={OrderItemEnum.total}>{parseCost(actualCurrency, totalExpressedInActualCurrency)}</OrderItemProperty>
             <OrderItemProperty type={OrderItemEnum.total}></OrderItemProperty>
           </OrderItem>
         </OrderTableBody>
